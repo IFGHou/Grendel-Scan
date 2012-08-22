@@ -1,0 +1,12 @@
+Add setting for case sensitive query params
+Add setting for case sensitive file names
+add setting for query param permiations; test param:
+	- once per site
+	- once per URL
+	- with all combinations of query parameters
+	
+spider options:
+	- All unique queries
+	- All unique query param names
+	- All file urls, one query each
+	

@@ -1,0 +1,15 @@
+#VERSION,2.003
+# $Id: db_multiple_index 72 2008-09-12 13:02:56Z deity $ 
+# http://www.cirt.net
+#######################################################################
+"index"
+"index.php"
+"index.php3"
+"index.html"
+"index.htm"
+"index.shtml"
+"index.cfm"
+"index.asp"
+"default.asp"
+"default.htm"
+"index.do"

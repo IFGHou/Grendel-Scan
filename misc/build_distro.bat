@@ -1,0 +1,1 @@
+start /low build_distro_main.bat %1

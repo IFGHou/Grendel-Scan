@@ -1,0 +1,11 @@
+#VERSION,2.000
+# $Id: db_httpoptions 1 2008-09-12 12:00:00Z deity $
+
+"nikto_id","method","osvdb","message"
+"999976","DELETE","5646","HTTP method ('@TYPE@' Header): 'DELETE' may allow clients to remove files on the web server."
+"999977","PROPPATCH","0","HTTP method ('@TYPE@' Header): 'PROPPATCH' indicates WebDAV is installed."
+"999978","PUT","397","HTTP method ('@TYPE@' Header): 'PUT' method could allow clients to save files on the web server."
+"999980","SEARCH","425","HTTP method ('@TYPE@' Header): 'SEARCH' indicates DAV/WebDAV is installed, and may be used to get directory listings if Index Server is running."
+"999981","PROPFIND","0","HTTP method ('@TYPE@' Header): 'PROPFIND' may indicate DAV/WebDAV is installed. This may be used to get directory listings if indexing is allow but a default page exists."
+"999982","MOVE","5647","HTTP method ('@TYPE@' Header): 'MOVE' may allow clients to change file locations on the web server."
+"999983","CONNECT","0","HTTP method ('@TYPE@' Header): 'CONNECT' may allow server to proxy client requests."

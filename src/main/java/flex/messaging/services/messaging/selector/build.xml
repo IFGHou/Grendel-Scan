@@ -1,0 +1,34 @@
+<project name='server/modules/core/src/java/flex/messaging/services/messaging/selector' default='main' basedir='../../../../../../..'>
+
+  <property name='lib.dir' value='${basedir}/lib'/>
+  <property name='selector.dir' value='${basedir}/modules/core/src/java/flex/messaging/services/messaging/selector'/>
+
+  <target name='main' depends='clean,dev'/>
+  <target name='dev' depends='selectorParser'/>  
+   
+  <target name='selectorParser' depends="parserCheck,parserBuild" />
+    <echo message="${selector.dir}"/>
+	<target name='parserCheck' if="src.depend">  	
+		<echo message="Checking whether Flex Messaging selector grammar file needs to be parsed " />     
+		<uptodate property="parserBuild.notRequired" targetfile="${selector.dir}/SQLParser.java" >
+      		<srcfiles dir="${selector.dir}" includes="SQL.jj" />
+	    </uptodate>
+  	</target>
+
+  	<target name="parserBuild" unless='parserBuild.notRequired'>
+  		<echo message="Parsing selector grammar file" />
+  	    <java classname="javacc" fork="true" failonerror="true">
+  	     	<classpath>
+  	       		<fileset dir="${lib.dir}" includes="javacc.jar"/>
+  	       	</classpath>
+  	       	<arg value="-OUTPUT_DIRECTORY=${selector.dir}"/>
+  	    	<arg value="${selector.dir}/SQLParser.jj"/>
+		</java>
+	</target>
+
+	<target name="clean">
+    	<echo message="Removing created Flex Messaging selector parser" />    
+		<delete file="${selector.dir}/SQLParser.java" />
+	</target>
+    
+</project>  

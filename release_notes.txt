@@ -1,0 +1,407 @@
+============================================================
+Known problems and limitations
+============================================================
+* Terminating a scan within the first few seconds can cause
+  unhandled exceptions. Since there is no report to 
+  generate, this isn't a huge problem.
+  
+* A path of /asdf/./fdsa is not considered the same as 
+  /asdf/fdsa. Similarly, .. is not properly handled. This
+  just causes extra work; it shouldn't cause a big problem.
+
+* JavaScript URLs are ignored.
+
+* The HTTP library isn't as forgiving as many browsers. For
+  example, if the web server uses invalid characters in a 
+  response header, the parser will choke. 
+
+* Multiple redirects are not always tested properly.
+
+* Session IDs separated from the URL with a semicolon will
+  not be processed properly. 
+
+* Redundant query parameter names (in URLs or POST bodies)
+  are not always handled correctly.
+
+* Query parameter order submitted through the proxy server 
+  may be changed. This isn't a problem for normal web apps.   
+
+  
+  
+
+
+============================================================
+1.1
+============================================================
+
+New features or improvements
+* Finally created a unified GUI.
+
+* Added command line mode.
+
+* Improved the response comparison algorithm, which will 
+  make file-not-found profiles, SQL tautologies, directory
+  traversal, and other tests more accurate.
+  
+* Removed pagination from the transaction list. 
+
+* Added support for AMF.
+
+
+Bug fixes:
+* Fixed a bug that prevented a scan from starting without
+  base URIs being defined.
+
+* Made the host name and port a directory in the website 
+  mirror.
+  
+* Fixed some problems with the transaction table refreshing
+
+* Fixed bug where the POST parameters from proxy requests
+  weren't tested.
+
+  
+
+============================================================
+1.0
+============================================================
+
+New features or improvements
+* Added support for saving and loading scan configurations.
+
+* Added a proxy-only mode.
+
+* Added the ability to load old scan databases so the 
+  transactions could be viewed and exported. The proxy can
+  still be active during this type of session.
+
+* Added a search engine recon test module.
+
+* Added the ability to export transactions to a plain text 
+  format on disk.
+
+* Known session ID names can be added as a regular 
+  expression in the GUI.
+  
+* Made significant improvements to the logic that compares
+  and scores two HTTP responses. This logic is used by the
+  automatic response code overrides, SQL tautology module,
+  directory traversal module, some Nikto tests, and the 
+  logged-out detection module. 
+
+* Improved the automatic file-not-found profiles.
+
+* Improved the accuracy of Nikto tests against index.php.
+
+* Added an option for HTTP method with the HTML form 
+  baseline module.
+  
+
+
+Bug fixes:
+* Fixed a problem caused by some apps only giving a cookie 
+  to the first login request in a TCP connection.
+
+* Fixed a bug that caused a serialized exception for 
+  BySetCookieTestJob jobs. 
+
+* Fixed problem with requesting HTTPS over proxy.
+
+* Fixed several problems that could cause exceptions when 
+  testing session IDs, particularly when stored in cookies.
+
+* Miscellaneous GUI fixes.
+
+* Miscellaneous report format fixes.
+
+* Fixed a problem where some cookies discovered through 
+  the proxy were not being tested. A null pointer exception
+  may have been thrown also.  
+
+* Fixed a bug that caused a null pointer exception when the
+  manual response-code overrides were used.
+
+* Fixed some parsing problems in the robots.txt module.
+
+* Fixed several bugs in handling encrypted proxy requests.
+
+* Miscellaneous report format fixes.
+
+* Fixed a problem where some cookies discovered through 
+  the proxy were not being tested. A null pointer exception
+  may have been thrown also.  
+
+* Fixed a problem where some websites weren't recognizing
+  URI/hex encoded characters with lower case hex letters 
+  (a-f).
+  
+* Made the transaction processing time accurate. Before, it
+  was the amount of time that it took the connection queue
+  to process the request, not how long it took the server.
+  
+* Nikto requests are now properly listed in the transaction
+  table.
+  
+  
+
+============================================================
+0.9.9
+============================================================
+
+New features or improvements
+* Improved the efficiency on a number of test modules.
+
+* Added proxy request intercepts
+
+
+
+Bug fixes:
+* Fixed a bunch of bugs in the manual testing GUI.
+
+* Fixed a bug with handling per-file tests. May have caused
+  some extra tests.
+
+* Fixed a bug in handling the max file size properly.
+
+* Fixed concurrent modification exception in Module0036.
+
+* Fixed a bug with testing for proxy servers using the 
+  CONNECT method.
+  
+* Fixed bug that prevented POST transactions from being 
+  properly loaded into the GUI view. 
+
+* Fixed a bug where moving between a parsed URL encoded view
+  and a raw view would unescape double URL encoded 
+  characters.
+
+* Fixed a bug with how irrelevant parameters were being 
+  handled in a URL query string.
+  
+* Fixed a bug where POST queries sent through the proxy were
+  double URL encoded before being sent to the web server.
+
+* Fixed a bug that caused a SQLException to be thrown during
+  some HTTP transaction saves.
+
+  
+  
+============================================================
+0.9.8
+============================================================
+Note: This release was only for the DEFCON CD, and should
+not be used. Update!
+
+New features or improvements
+* Added manual testing features to the scan status window.
+
+
+
+============================================================
+0.9.7
+============================================================
+New features or improvements
+* New module to test for cross-site tracing (XST).
+
+* New module to test for a web server that also proxies 
+  requests.
+
+* New module that parses robots.txt, requests all discovered 
+  paths, and reports disallowed paths.
+
+* New module that lists all HTML and/or JavaScript comments. 
+ 
+* New module for testing authentication enforcement. It is
+  not fully tested yet. 
+ 
+* Added a GUI option for maximum requests in a scan.
+
+* Added a GUI option for maximum failed requests to a host.
+
+* Improved the raw HTTP client capabilities
+
+* Tests for directories in automatic response code 
+  overrides. Previously, only certain file extensions were
+  tested.
+
+* Significantly improved the efficiency of Nikto tests by
+  checking for the presence of CGI directories.
+
+* Added a GUI option for the user agent string; included
+  strings for IE, Firefox and Opera.
+
+* Added a GUI option for the output directory. This is the
+  default location for the report, error.log, the HTTP 
+  transaction record, and module output, such as the 
+  website mirror.
+
+* Version is at the top of the error.log file.
+
+* Added time stamps to error.log
+
+* Added a dump of scan stats on a scan termination.
+
+* Added options for socket read timeout, and max 
+  consecutive failed requests.
+
+* Improved recognition of session ID values in cookies.
+
+
+
+Bug fixes:
+* Fixed some formatting problems in the HTML reports
+
+* Allowed a base URL _or_ a URL whitelist to be defined.
+
+* Corrected unhandled exception logging in the thread group
+
+* Fixed a problem in the Form Baseline module that caused
+  a NullPointerException when no method was explicitly 
+  defined in the form tag.
+  
+* Fixed a bug in the URL encoding. This was causing problems
+  for some tests that performed their own URL encoding, 
+  primarily SQL injection.
+  
+* Fixed problem where some test jobs were being deleted 
+  without being run. They weren't being removed from the 
+  pending count, which prevented the scan from completing.
+  
+* Fixed several problems with exceptions being thrown when
+  a scan is terminated.
+
+* Fixed a bug in the build process that didn't include the
+  help files.
+  
+* Created a work around for a null pointer exception being 
+  thrown in a getPath() call. I'm not clear why it's 
+  happening, but the work around will return an empty path.
+
+* Fixed a ConcurrentModificationException in 
+  ResponseCodeOverrides.  
+  
+* Fixed a bug where the spider was choking on mailto: links  
+
+* Fixed a problem where some hung jobs would prevent a 
+  terminated scan from generating a report.
+  
+* Fixed a bug with how redirects were being handled if the 
+  redirect location wasn't reachable.
+  
+* Fixed a really bone-headed bug that prevented a lot of 
+  relative URIs from being correctly processed.
+  
+* Added a work around for a bug in Java's URI.resolve 
+  function. Occured when the base URI doesn't have a path.
+    
+* Fixed a bug where POSTs recieved through the proxy weren't
+  being forwarded on properly.
+  
+* Fixed a bugs where POST query parameters weren't being   
+  
+* Fixed a bug where POST uniqueness was not being properly
+  calculated.
+  
+* Added some limits to kep overly large HTML files from 
+  causing overly long loops.
+  
+* Fixed a bug where the dir traversal module wasn't being 
+  run.
+  
+* Fixed bug where unhandled exceptions in the categorizer
+  and requester threads weren't being properly caught, which 
+  would crash the thread.  
+  
+* Fixed a bug where POSTs weren't handled correctly by some
+  web servers. This was mostly seen with requests sent 
+  through the internal proxy server.
+
+* Fixed a bug with set-cookie being ignored in a redirect.
+
+* Fixed a bug in handling proxy requests for non standard
+  HTTPS ports.
+  
+* Fixed some intermittent SQL problems that were forcing
+  queries to be resent.
+  
+    
+
+============================================================
+0.9.6
+============================================================
+New features or improvements
+* Module that lists saves all discovered URLs to a file
+
+* Module that mirrors the website into a directory structure
+
+* HTML report generator
+
+* Simplified authentication config tab
+
+* Performance improvements by checking for proper mime types
+  before running tests. 
+  
+* Added default URL blacklists to block media files, office 
+  documents, etc
+
+* Added help files to the scan settings and scan status
+  stages
+  
+* All errors are now written to error.log  
+
+
+
+Bug fixes:
+* Fixed URL black list enforcement
+
+* Fixed checking for a username in the auth profile
+
+* Fixed full report creation after a terminated scan
+
+* Fixed proper enforcement of ignored and forbidden query
+  parameters
+
+* Fixed some null value handling in the spider
+
+* Fixed the scope of query parameter testing. Was over the
+  entire host, now is only for the base URI.
+  
+* Fixed bug where a redirected transaction wasn't properly 
+  saved, resulting in null exceptions later.
+  
+* Fixed a bug where XSS, CSRF, and directory traversal 
+  tests weren't being run.
+
+* Fixed a bug where query payloads were constructed into 
+  URLs without ampersands between the parameters
+  
+* Fixed several bugs related to report generation after
+  manual scan termination    
+
+* Fixed a bug where a base URI without a directory present
+  (i.e. http://www.grendel-scan.com) caused an error.
+  
+
+
+============================================================
+0.9.5
+============================================================
+New features or improvements
+* Added upstream proxy support
+
+* Added a "pause scan" button
+
+* Added a CSRF test module
+
+* Improved the efficiency of the XSS testing by check for 
+  which characters are escaped. This was intended for 
+  earlier releases, but forgotten about.
+
+
+
+Bug fixes:
+* Fixed a deadlock bug in the testing queue; was due to test
+  jobs not being removed after a test crash.
+
+* Fixed the line length functionality in the text report
+

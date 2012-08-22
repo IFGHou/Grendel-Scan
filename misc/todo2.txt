@@ -1,0 +1,14 @@
+put paros log parsing on the to do list
+List the session IDs discovered
+setup GUI tooltips
+logged out detection as an option in the GUI
+clone the request wrapper on line 424 in the redirect handling
+copying the headers from a post into the get for it's redirects will copy the Content-Type header, which isn't needed
+The login needs to be handled before the redirect is
+generate report if there is no redirect after html form login
+
+Module 14 is looking for new url-session ids in the response to the request with the session ID in the parameter. It should be looking in the original request that had a session ID in ITS response body. Probably needs a rewrite, maybe a new module
+
+use consecutive connection failures, instead of total
+scripted, or simple regex modifications to a transaction before it is tested
+

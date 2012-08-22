@@ -1,0 +1,106 @@
+implement scanComplete method for testmodules
+
+document the api
+	start with requesterQueue
+
+Integrate database
+
+Fix exception handling
+
+Think about JavaScript: in URL locations
+
+Double check thread safety
+
+Check all warnings
+
+Check for null handling, especially in constructors
+
+replace syncronized blocks for collections with syncronized collections
+
+Make URL encoding consistent
+
+Auth/sessID testing
+	send login as a non-test
+	if a SessID is generated, test it, then use the last response for future authenticated requests
+	Test all set-cookies/new sessIDs that didn't have the cookie in the URL or headers
+	send a request with all usernames
+
+implement soft prereq enforcement
+
+make sure that the byResponse header only generates one test job if there are duplicate headers. (e.g. set-cookie)
+
+Other modules to write:
+	webDAV
+	remote file inclusion
+	csrf
+	SSL pages available over HTTP
+	Response splitting
+	large string submissions (buffer overflow, et al)
+	sql injection
+	blind sql injection
+	brute force authentication
+	search engine recon?
+	robots.txt
+	test for proxying of requests
+	hmap
+	sqlmap
+	server internal path disclosure
+	list HTML & JS comments
+	increment and decrement numeric query parameters
+	Try name variations (e.g. if you see senddocument, try viewdocument)
+	follow location headers (then turn off redirect handling)
+	search for standard error messages by type: PHP, .Net, etc
+	Look for SQL errors unrelated to SQL injection testing
+	
+Add final check code & categories
+
+For XSS, think about detecting blacklisted characters first
+
+Create a "one time password" authentication package
+
+Logged out detection
+	Learn to identify logged out responses
+		Have user show through proxy
+		Change session ID value to random, look at response
+		Look for logout links and follow them
+		Periodically check an earlier request for the same response
+	Create testjob break points. 
+		If a logged out condition is detected, redo all tests since the last break point 		 
+		Login again to make a new sessionID
+		Inform all test
+
+Finish SessionState package
+
+HttpTransaction persistence with hibernate
+
+Auto-update
+	
+Move LoadModules to Scan
+
+Merge sharedComponents into scan
+
+Change MasterTestModuleCollection to remove directory
+
+Remove iterator at MasterTestModuleCollection.java:136
+
+Change test module instantiation to allow any package - put package name in the payload file
+
+make variables as small of scope as possible
+
+Consider making modules referenced by class name only
+
+make bad extensions a default config file option
+
+move static library initilizers to each static method
+
+Externalize all sql statements
+
+Consolidate all sql initialization
+
+Move all sql inserts to a seperate class
+
+Change constructors so they don't initialize values
+
+Externalize all constants as enums
+
+	

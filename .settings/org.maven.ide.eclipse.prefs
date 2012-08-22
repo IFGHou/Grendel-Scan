@@ -1,0 +1,9 @@
+#Sun Apr 17 20:40:43 MDT 2011
+activeProfiles=jboss-public-repository
+eclipse.preferences.version=1
+fullBuildGoals=process-test-resources
+includeModules=false
+resolveWorkspaceProjects=true
+resourceFilterGoals=process-resources resources\:testResources
+skipCompilerPlugin=true
+version=1
