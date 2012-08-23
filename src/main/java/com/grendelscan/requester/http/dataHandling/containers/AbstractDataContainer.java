@@ -7,6 +7,7 @@ import java.util.*;
 
 import com.grendelscan.requester.http.dataHandling.data.*;
 import com.grendelscan.requester.http.dataHandling.references.DataReference;
+import com.grendelscan.utils.StringUtils;
 
 
 /**
@@ -47,6 +48,20 @@ public abstract class AbstractDataContainer<ReferenceType extends DataReference>
 		{
 			child.setTransactionId(transactionId);
 		}
+	}
+
+
+	@Override
+	public String childrenDebugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("Children:\n");
+		for(Data child: children)
+		{
+			sb.append(StringUtils.indentLines(child.debugString(), 1));
+			sb.append("\n");
+		}
+		return sb.toString();
 	}
 
 

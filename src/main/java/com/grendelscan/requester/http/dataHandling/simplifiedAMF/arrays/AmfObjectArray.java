@@ -6,6 +6,7 @@ import com.grendelscan.requester.http.dataHandling.simplifiedAMF.AbstractAmfData
 import com.grendelscan.requester.http.dataHandling.simplifiedAMF.AbstractAmfDataContainer;
 import com.grendelscan.requester.http.dataHandling.simplifiedAMF.dataTypeDefinitions.AmfDataType;
 import com.grendelscan.requester.http.dataHandling.simplifiedAMF.interfaces.ArbitraryUnnamedChildren;
+import com.grendelscan.utils.StringUtils;
 
 public class AmfObjectArray extends AmfPrimitiveArray implements ArbitraryUnnamedChildren
 {
@@ -26,4 +27,5 @@ public class AmfObjectArray extends AmfPrimitiveArray implements ArbitraryUnname
 	{
 		return AmfDataType.getCreatableTypes();
 	}
+
 }

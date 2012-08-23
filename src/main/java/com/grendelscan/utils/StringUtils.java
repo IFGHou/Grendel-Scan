@@ -549,4 +549,27 @@ public class StringUtils
         }
         return out.toString();
     }
+    
+    public static String indentLines(String lines, int tabs)
+    {
+    	StringBuilder sb = new StringBuilder();
+    	boolean first = true;
+    	for (String line: lines.split("\n"))
+    	{
+    		if (first)
+    		{
+    			first = false;
+    		}
+    		else
+    		{
+    			sb.append("\n");
+    		}
+    		for (int i = 0; i < tabs; i++)
+			{
+				sb.append("\t");
+			}
+    		sb.append(line);
+    	}
+    	return sb.toString();
+    }
 }

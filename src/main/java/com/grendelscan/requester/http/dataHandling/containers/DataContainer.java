@@ -19,4 +19,5 @@ public interface DataContainer<ReferenceType extends DataReference> extends Data
 	public Data getChild(ReferenceType reference);
 	public Data getChildUnsafeType(DataReference reference);
 	public void replaceChild(ReferenceType reference, Data child);
+	public String childrenDebugString();
 }

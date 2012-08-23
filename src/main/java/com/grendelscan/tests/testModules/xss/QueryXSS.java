@@ -13,6 +13,7 @@ import com.grendelscan.tests.libraries.XSS.SuccessfullXSS;
 import com.grendelscan.tests.libraries.XSS.XSS;
 import com.grendelscan.tests.testModuleUtils.TestModuleGUIPath;
 import com.grendelscan.tests.testModules.TestModule;
+import com.grendelscan.tests.testModules.hidden.TokenSubmitter;
 import com.grendelscan.tests.testTypes.ByRepeatableOutputContextTest;
 import com.grendelscan.utils.HtmlUtils;
 import com.grendelscan.utils.URIStringUtils;
@@ -138,6 +139,12 @@ public class QueryXSS extends TestModule implements ByRepeatableOutputContextTes
 						longDescription, XSS.getXSSImpact(), XSS.getXSSRecomendations(), XSS.getXSSReferences());
 		Scan.getInstance().getFindings().addFinding(event);
 
+	}
+
+	@Override
+	public Class<? extends TestModule>[] getPrerequisites()
+	{
+		return new Class[]{TokenSubmitter.class};
 	}
 
 

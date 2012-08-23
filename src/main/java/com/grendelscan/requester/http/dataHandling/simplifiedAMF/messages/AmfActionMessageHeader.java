@@ -151,4 +151,13 @@ public class AmfActionMessageHeader extends AbstractAmfDataContainer<AmfActionMe
 		data.writeBytes(out);
 		
 	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#childrenDebugString()
+	 */
+	@Override
+	public String childrenDebugString()
+	{
+		return data.debugString();
+	}
 }

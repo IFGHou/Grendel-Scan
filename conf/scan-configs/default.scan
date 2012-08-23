@@ -255,11 +255,6 @@
 <enabled>false</enabled>
 </test_modules>
 <test_modules>
-<module_class>com.grendelscan.tests.testModules.hidden.TokenSubmitter</module_class>
-<module_name>Token submitter</module_name>
-<enabled>false</enabled>
-</test_modules>
-<test_modules>
 <module_class>com.grendelscan.tests.testModules.webServerConfiguration.XST</module_class>
 <module_name>XST</module_name>
 <enabled>false</enabled>

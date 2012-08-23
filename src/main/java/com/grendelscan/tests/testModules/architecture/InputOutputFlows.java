@@ -13,6 +13,7 @@ import com.grendelscan.tests.libraries.TokenTesting.TokenContextType;
 import com.grendelscan.tests.libraries.TokenTesting.TokenContextTypeUtils;
 import com.grendelscan.tests.testModuleUtils.TestModuleGUIPath;
 import com.grendelscan.tests.testModules.TestModule;
+import com.grendelscan.tests.testModules.hidden.TokenSubmitter;
 import com.grendelscan.tests.testTypes.ByOutputContextTest;
 import com.grendelscan.utils.HtmlUtils;
 import com.grendelscan.utils.URIStringUtils;
@@ -55,6 +56,12 @@ public class InputOutputFlows extends TestModule implements ByOutputContextTest
 	public boolean isExperimental()
 	{
 		return false;
+	}
+
+	@Override
+	public Class<? extends TestModule>[] getPrerequisites()
+	{
+		return new Class[]{TokenSubmitter.class};
 	}
 
 	private synchronized void logFinding(Collection<TokenContext> contexts)

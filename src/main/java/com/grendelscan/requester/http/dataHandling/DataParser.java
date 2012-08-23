@@ -22,24 +22,27 @@ import com.grendelscan.utils.dataFormating.DataFormatUtils;
  */
 public class DataParser
 {
-	public static Data parseRawData(byte[] data, DataContainer parent, String mimeType, DataReference reference, int transactionId) 
+	public static Data parseRawData(byte[] data, DataContainer parent, DataFormat format, DataReference reference, int transactionId) 
 	{
-		DataFormat format;
-		if ((data == null || data.length == 0) && (mimeType == null || mimeType.isEmpty()))
+		if ((data == null || data.length == 0) && format == null)
 		{
 			return new ByteData(parent, new byte[0], reference, transactionId);
 		}
-		
-		try
+
+		if (format == null)
 		{
-			format = DataFormatUtils.getDataFormat(data, mimeType);
-		}
-		catch (DataFormatException e1)
-		{
-			Log.warn("Couldn't figure out data format. Using raw bytes", e1);
-			return new ByteData(parent, data, reference, transactionId);
+			try
+			{
+				format = DataFormatUtils.getDataFormat(data, null);
+			}
+			catch (DataFormatException e1)
+			{
+				Log.warn("Couldn't figure out data format. Using raw bytes", e1);
+				return new ByteData(parent, data, reference, transactionId);
+			}
 		}
 		
+
 		if (format.formatType.isEncodeable())
 		{
 			try
@@ -59,6 +62,28 @@ public class DataParser
 		}
 		
 		return new ByteData(parent, data, reference, transactionId); // The default for all base data types
+
+	}
+	
+	public static Data parseRawData(byte[] data, DataContainer parent, String mimeType, DataReference reference, int transactionId) 
+	{
+		DataFormat format;
+		if ((data == null || data.length == 0) && (mimeType == null || mimeType.isEmpty()))
+		{
+			return new ByteData(parent, new byte[0], reference, transactionId);
+		}
+		
+		try
+		{
+			format = DataFormatUtils.getDataFormat(data, mimeType);
+		}
+		catch (DataFormatException e1)
+		{
+			Log.warn("Couldn't figure out data format. Using raw bytes", e1);
+			return new ByteData(parent, data, reference, transactionId);
+		}
+		
+		return parseRawData(data, parent, format, reference, transactionId);
 	}
 	
 	private static DataContainer<?> parseContainer(byte[] data, DataFormat format, DataContainer<?> parent, DataReference reference, int transactionId)

@@ -19,6 +19,7 @@ import com.grendelscan.requester.http.dataHandling.simplifiedAMF.AmfPrimitiveDat
 import com.grendelscan.requester.http.dataHandling.simplifiedAMF.dataTypeDefinitions.AmfDataType;
 import com.grendelscan.requester.http.dataHandling.simplifiedAMF.output.AmfOutputStreamRegistry;
 import com.grendelscan.utils.AmfUtils;
+import com.grendelscan.utils.StringUtils;
 
 import flex.messaging.io.amf.MessageBody;
 
@@ -185,6 +186,22 @@ public class AmfBody extends AbstractAmfDataContainer<AmfBodyComponentReference>
 		}
 		data.writeBytes(out);
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#childrenDebugString()
+	 */
+	@Override
+	public String childrenDebugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("\nTarget URI: ");
+		sb.append(StringUtils.indentLines(targetURI.debugString(), 1));
+		sb.append("\nResponse URI: ");
+		sb.append(StringUtils.indentLines(responseURI.debugString(), 1));
+		sb.append("\nData: ");
+		sb.append(StringUtils.indentLines(data.debugString(), 1));
+		return sb.toString();
 	}
 	
 }

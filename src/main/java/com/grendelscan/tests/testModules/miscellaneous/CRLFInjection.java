@@ -21,6 +21,7 @@ import com.grendelscan.tests.libraries.TokenTesting.TokenContextTypeUtils;
 import com.grendelscan.tests.libraries.TokenTesting.TokenTesting;
 import com.grendelscan.tests.testModuleUtils.TestModuleGUIPath;
 import com.grendelscan.tests.testModules.TestModule;
+import com.grendelscan.tests.testModules.hidden.TokenSubmitter;
 import com.grendelscan.tests.testTypes.ByRepeatableOutputContextTest;
 import com.grendelscan.utils.HtmlUtils;
 
@@ -59,6 +60,13 @@ public class CRLFInjection extends TestModule implements ByRepeatableOutputConte
 	{
 		return false;
 	}
+	
+	@Override
+	public Class<? extends TestModule>[] getPrerequisites()
+	{
+		return new Class[]{TokenSubmitter.class};
+	}
+
 
 	@Override
 	public void testByRepeatableOutputContext(Collection<TokenContext> contexts, int testJobId) throws InterruptedScanException

@@ -56,7 +56,7 @@ public class ByteArrayUtils
 		}
 		else if (split > 0)
 		{
-			results[0] = Arrays.copyOfRange(array, 0, split - 1);
+			results[0] = Arrays.copyOfRange(array, 0, split);
 			results[1] = Arrays.copyOfRange(array, split + 1, array.length);
 			return results;
 		}

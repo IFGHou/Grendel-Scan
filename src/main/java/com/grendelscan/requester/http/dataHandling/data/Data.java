@@ -24,4 +24,5 @@ public interface Data extends Serializable
 	public DataReferenceChain getReferenceChain();
 	public int getTransactionId();
 	public void setTransactionId(int transactionId);
+	public String debugString();
 }

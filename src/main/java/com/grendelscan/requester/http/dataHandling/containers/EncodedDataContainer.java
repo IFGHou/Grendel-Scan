@@ -5,12 +5,15 @@ package com.grendelscan.requester.http.dataHandling.containers;
 
 import java.io.OutputStream;
 
-import com.grendelscan.logging.Log;
+import org.apache.commons.lang.NotImplementedException;
+import org.jgroups.util.ExposedByteArrayOutputStream;
+
 import com.grendelscan.requester.http.dataHandling.DataParser;
+import com.grendelscan.requester.http.dataHandling.data.AbstractData;
 import com.grendelscan.requester.http.dataHandling.data.Data;
-import com.grendelscan.requester.http.dataHandling.data.DataUtils;
 import com.grendelscan.requester.http.dataHandling.references.DataReference;
 import com.grendelscan.requester.http.dataHandling.references.SingleChildReference;
+import com.grendelscan.utils.StringUtils;
 import com.grendelscan.utils.dataFormating.DataEncodingStream;
 import com.grendelscan.utils.dataFormating.DataFormat;
 import com.grendelscan.utils.dataFormating.DataFormatException;
@@ -20,14 +23,12 @@ import com.grendelscan.utils.dataFormating.DataFormatUtils;
  * @author david
  *
  */
-public class EncodedDataContainer extends AbstractDataContainer<SingleChildReference>
+public class EncodedDataContainer extends AbstractData implements DataContainer<SingleChildReference>
 {
 
-	/**
-	 * 
-	 */
 	private static final long	serialVersionUID	= 1L;
 	private final DataFormat format;
+	private Data child;
 	/**
 	 * @param transactionId
 	 * @throws DataFormatException 
@@ -37,7 +38,7 @@ public class EncodedDataContainer extends AbstractDataContainer<SingleChildRefer
 		super(parent, reference, transactionId);
 		this.format = format;
 		byte[] decodedData = DataFormatUtils.decodeData(encodedData, format.formatType);
-		children.add(DataParser.parseRawData(decodedData, this, null, SingleChildReference.getInstance(), getTransactionId()));
+		child = DataParser.parseRawData(decodedData, this, (DataFormat) null, SingleChildReference.getInstance(), getTransactionId());
 	}
 	
 	
@@ -66,7 +67,7 @@ public class EncodedDataContainer extends AbstractDataContainer<SingleChildRefer
 	@Override
 	public Data getChild(@SuppressWarnings("unused") SingleChildReference reference)
 	{
-		return children.get(0);
+		return child;
 	}
 
 
@@ -76,7 +77,7 @@ public class EncodedDataContainer extends AbstractDataContainer<SingleChildRefer
 	@Override
 	public void replaceChild(@SuppressWarnings("unused") SingleChildReference reference, Data child)
 	{
-		children.set(0, child);
+		this.child = child;
 	}
 
 	/* (non-Javadoc)
@@ -85,7 +86,7 @@ public class EncodedDataContainer extends AbstractDataContainer<SingleChildRefer
 	@Override
 	public Data getChildUnsafeType(DataReference reference)
 	{
-		return getChild((SingleChildReference) reference);
+		return child;
 	}
 
 
@@ -96,6 +97,59 @@ public class EncodedDataContainer extends AbstractDataContainer<SingleChildRefer
 	public void writeBytes(OutputStream out)
 	{
 		DataEncodingStream des = new DataEncodingStream(out, format);
-		children.get(0).writeBytes(des);
+		child.writeBytes(des);
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.data.Data#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("EncodedDataContainer\n");
+		sb.append("\tFormat: ");
+		sb.append(format.formatType);
+		sb.append("\n");
+		sb.append("\tRaw Data:\n");
+		sb.append(StringUtils.indentLines(child.debugString(), 2));
+
+		ExposedByteArrayOutputStream out = new ExposedByteArrayOutputStream();
+		writeBytes(out);
+		
+		sb.append("\tEncoded Data:\n");
+		sb.append(StringUtils.indentLines(out.toString(), 2));
+		return sb.toString();
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#getDataChildren()
+	 */
+	@Override
+	public Data[] getDataChildren()
+	{
+		return new Data[]{child};
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#removeChild(com.grendelscan.requester.http.dataHandling.data.Data)
+	 */
+	@Override
+	public void removeChild(Data child)
+	{
+		throw new NotImplementedException("Doesn't make sense for an encoded data container");
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#childrenDebugString()
+	 */
+	@Override
+	public String childrenDebugString()
+	{
+		return child.debugString();
 	}
 }

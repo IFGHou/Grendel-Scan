@@ -13,6 +13,7 @@ import com.grendelscan.requester.http.dataHandling.data.ByteData;
 import com.grendelscan.requester.http.dataHandling.data.Data;
 import com.grendelscan.requester.http.dataHandling.references.DataReference;
 import com.grendelscan.requester.http.dataHandling.references.NumberedListDataReference;
+import com.grendelscan.utils.StringUtils;
 
 /**
  * @author david
@@ -78,6 +79,7 @@ public class UrlDirectoryDataContainer extends AbstractDataContainer<NumberedLis
 
 	private void setPath(String path)
 	{
+		children.clear();
 		int i = 0;
 		for(String d: path.split("/"))
 		{
@@ -120,6 +122,18 @@ public class UrlDirectoryDataContainer extends AbstractDataContainer<NumberedLis
 				Log.error("Problem writing path component: " + e.toString(), e);
 			}
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.data.Data#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("UrlDirectoryDataContainer\n");
+		sb.append(StringUtils.indentLines(childrenDebugString(), 1));
+		return sb.toString();
 	}
 
 }

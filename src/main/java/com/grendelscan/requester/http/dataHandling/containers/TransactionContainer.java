@@ -13,19 +13,21 @@ import com.grendelscan.logging.Log;
 import com.grendelscan.requester.http.HttpConstants;
 import com.grendelscan.requester.http.PrimaryQueryType;
 import com.grendelscan.requester.http.dataHandling.DataParser;
+import com.grendelscan.requester.http.dataHandling.data.AbstractData;
 import com.grendelscan.requester.http.dataHandling.data.Data;
 import com.grendelscan.requester.http.dataHandling.references.DataReference;
 import com.grendelscan.requester.http.dataHandling.references.DataReferenceChain;
 import com.grendelscan.requester.http.dataHandling.references.TransactionDataReference;
 import com.grendelscan.requester.http.transactions.StandardHttpTransaction;
 import com.grendelscan.scan.Scan;
+import com.grendelscan.utils.StringUtils;
 import com.grendelscan.utils.URIStringUtils;
 
 /**
  * @author david
  *
  */
-public class TransactionContainer extends AbstractDataContainer<TransactionDataReference>
+public class TransactionContainer extends AbstractData implements DataContainer<TransactionDataReference>
 {
 	
 	/**
@@ -61,41 +63,28 @@ public class TransactionContainer extends AbstractDataContainer<TransactionDataR
 		return null;
 	}
 
-
 	
 	private synchronized void parseData()
 	{
-		byte[] body = getTransaction().getRequestWrapper().getBody();
+		StandardHttpTransaction transaction = getTransaction(); 
+		byte[] body = transaction.getRequestWrapper().getBody();
 		if (body != null && body.length > 0)
 		{
-			bodyData = DataParser.parseRawData(body, this, getTransaction().getRequestWrapper().getHeaders().getMimeType(), new TransactionDataReference(true), getTransactionId());
+			setBodyData( DataParser.parseRawData(body, this, transaction.getRequestWrapper().getHeaders().getMimeType(), new TransactionDataReference(true), getTransactionId()));
 		}
 		
 		try
 		{
-			byte[] urlQuery = URIStringUtils.getQuery(getTransaction().getRequestWrapper().getURI()).getBytes();
+			byte[] urlQuery = URIStringUtils.getQuery(transaction.getRequestWrapper().getURI()).getBytes();
 			if (urlQuery != null && urlQuery.length > 0)
 			{
-				urlQueryDataContainer = new UrlEncodedQueryStringDataContainer(this, urlQuery, new TransactionDataReference(false), getTransactionId());
+				setUrlQueryDataContainer(new UrlEncodedQueryStringDataContainer(this, urlQuery, new TransactionDataReference(false), getTransactionId()));
 			}
 		}
 		catch (URISyntaxException e)
 		{
 			e.printStackTrace();
 		}
-		
-		
-		if (urlQueryDataContainer != null)
-		{
-			children.add(urlQueryDataContainer);
-		}
-		if (bodyData != null)
-		{
-			children.add(bodyData);
-		}
-		
-		setBodyData(bodyData);
-		setUrlQueryDataContainer(urlQueryDataContainer);
 	}
 	
  
@@ -132,6 +121,7 @@ public class TransactionContainer extends AbstractDataContainer<TransactionDataR
 		return PrimaryQueryType.URL_QUERY;
 	}
 
+	
 	private void createHtmlQueryContainer()
 	{
 		switch(getPrimaryQueryType())
@@ -298,6 +288,44 @@ public class TransactionContainer extends AbstractDataContainer<TransactionDataR
 	public void writeBytes(OutputStream out)
 	{
 		throw new NotImplementedException("Not implemented at the transaction level");
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.data.Data#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("TransactionContainer:\n");
+		sb.append(StringUtils.indentLines(abstractDataDebugString(), 1));
+		sb.append(StringUtils.indentLines(childrenDebugString(), 1));
+		
+		return sb.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#getDataChildren()
+	 */
+	@Override
+	public Data[] getDataChildren()
+	{
+		return new Data[] {urlQueryDataContainer, bodyData};
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#childrenDebugString()
+	 */
+	@Override
+	public String childrenDebugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("URL container:\n");
+		sb.append(StringUtils.indentLines(urlQueryDataContainer.debugString(), 1));
+		sb.append("\nBody container:\n");
+		sb.append(StringUtils.indentLines(bodyData.debugString(), 1));
+		
+		return sb.toString();
 	}
 	
 

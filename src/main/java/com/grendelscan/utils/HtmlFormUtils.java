@@ -29,6 +29,8 @@ import com.grendelscan.html.HtmlNodeWriter;
 import com.grendelscan.logging.Log;
 import com.grendelscan.requester.TransactionSource;
 import com.grendelscan.requester.http.HttpConstants;
+import com.grendelscan.requester.http.dataHandling.containers.HtmlQueryContainer;
+import com.grendelscan.requester.http.dataHandling.containers.TransactionContainer;
 import com.grendelscan.requester.http.transactions.StandardHttpTransaction;
 import com.grendelscan.requester.http.transactions.UnrequestableTransaction;
 import com.grendelscan.utils.collections.CollectionUtils;
@@ -124,7 +126,9 @@ public class HtmlFormUtils
 				value = FileUtils.readFile(file.getAbsolutePath());
 			}
 		
-			transaction.getTransactionContainer().getOrCreateHtmlQueryContainer().addParameter(input.getName(), value);
+			TransactionContainer transactionContainer = transaction.getTransactionContainer();
+			HtmlQueryContainer<?> htmlQueryContainer = transactionContainer.getOrCreateHtmlQueryContainer();
+			htmlQueryContainer.addParameter(input.getName(), value);
 		}
 	}
 

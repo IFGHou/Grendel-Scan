@@ -10,16 +10,18 @@ import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.commons.lang.NotImplementedException;
 
 import com.grendelscan.logging.Log;
+import com.grendelscan.requester.http.dataHandling.data.AbstractData;
 import com.grendelscan.requester.http.dataHandling.data.ByteData;
 import com.grendelscan.requester.http.dataHandling.data.Data;
 import com.grendelscan.requester.http.dataHandling.references.DataReference;
 import com.grendelscan.requester.http.dataHandling.references.FilenameComponentDataReference;
+import com.grendelscan.utils.StringUtils;
 
 /**
  * @author david
  *
  */
-public class UrlFileNameDataContainer extends AbstractDataContainer<FilenameComponentDataReference> 
+public class UrlFileNameDataContainer extends AbstractData implements DataContainer<FilenameComponentDataReference>
 {
 	/**
 	 * 
@@ -125,6 +127,50 @@ public class UrlFileNameDataContainer extends AbstractDataContainer<FilenameComp
 			Log.error("Problem writing filename: " + e.toString(), e);
 		}
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#getDataChildren()
+	 */
+	@Override
+	public Data[] getDataChildren()
+	{
+		return new Data[] {name, extension};
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#removeChild(com.grendelscan.requester.http.dataHandling.data.Data)
+	 */
+	@Override
+	public void removeChild(Data child)
+	{
+		throw new NotImplementedException("Remove child makes no sense for a file name container");
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.data.Data#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("UrlFileNameDataContainer\n");
+		sb.append(StringUtils.indentLines(childrenDebugString(), 1));
+		return sb.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#childrenDebugString()
+	 */
+	@Override
+	public String childrenDebugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("Name:\n");
+		sb.append(StringUtils.indentLines(name.debugString(), 1));
+		sb.append("Extension:\n");
+		sb.append(StringUtils.indentLines(extension.debugString(), 1));
+		return sb.toString();
 	}
 
 }

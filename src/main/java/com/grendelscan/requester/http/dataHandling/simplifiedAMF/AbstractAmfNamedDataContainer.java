@@ -17,6 +17,7 @@ import com.grendelscan.requester.http.dataHandling.references.DataReference;
 import com.grendelscan.requester.http.dataHandling.references.NamedDataContainerDataReference;
 import com.grendelscan.requester.http.dataHandling.simplifiedAMF.dataTypeDefinitions.AmfDataType;
 import com.grendelscan.requester.http.dataHandling.simplifiedAMF.interfaces.ArbitraryChildren;
+import com.grendelscan.utils.StringUtils;
 import com.grendelscan.utils.collections.BidiMap;
 
 /**
@@ -27,7 +28,6 @@ public abstract class AbstractAmfNamedDataContainer extends AbstractAmfDataConta
 	implements ArbitraryChildren, ExpandableDataContainer<NamedDataContainerDataReference>
 {
 	protected BidiMap<byte[], NamedAmfDataContainer> properties;
-//	protected BidiMap<byte[], NamedAmfDataContainer> properties;
 	/**
 	 * @param name
 	 * @param type
@@ -166,5 +166,20 @@ public abstract class AbstractAmfNamedDataContainer extends AbstractAmfDataConta
 	public List<byte[]> getChildNames()
 	{
 		return properties.getSortedKeys();
+	}
+
+	@Override
+	public String childrenDebugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("AMF properties:");
+		for(byte[] key: properties.keySet())
+		{
+			sb.append("\n\tkey: ");
+			sb.append(key);
+			sb.append("\nvalue:\n");
+			sb.append(StringUtils.indentLines(properties.get(key).debugString(), 2));
+		}
+		return sb.toString();
 	}
 }

@@ -7,6 +7,7 @@ import com.grendelscan.requester.http.dataHandling.containers.DataContainer;
 import com.grendelscan.requester.http.dataHandling.containers.DataContainerUtils;
 import com.grendelscan.requester.http.dataHandling.references.DataReference;
 import com.grendelscan.requester.http.dataHandling.references.DataReferenceChain;
+import com.grendelscan.utils.StringUtils;
 
 /**
  * @author david
@@ -88,5 +89,15 @@ public abstract class AbstractData implements Data
 		return DataContainerUtils.getReferenceChain(this);
 	}
 
-
+	public String abstractDataDebugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("Parent:\n");
+		sb.append(StringUtils.indentLines(parent.debugString(), 1));
+		sb.append("\nReference: ");
+		sb.append(reference.toString());
+		sb.append("\nTransaction ID: ");
+		sb.append(transactionId);
+		return sb.toString();
+	}
 }

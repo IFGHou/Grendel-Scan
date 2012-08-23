@@ -13,18 +13,20 @@ import com.grendelscan.logging.Log;
 import com.grendelscan.requester.http.dataHandling.containers.AbstractDataContainer;
 import com.grendelscan.requester.http.dataHandling.containers.DataContainer;
 import com.grendelscan.requester.http.dataHandling.containers.NamedDataContainer;
+import com.grendelscan.requester.http.dataHandling.data.AbstractData;
 import com.grendelscan.requester.http.dataHandling.data.ByteData;
 import com.grendelscan.requester.http.dataHandling.data.Data;
 import com.grendelscan.requester.http.dataHandling.data.DataUtils;
 import com.grendelscan.requester.http.dataHandling.references.DataReference;
 import com.grendelscan.requester.http.dataHandling.references.NameOrValueReference;
 import com.grendelscan.requester.http.dataHandling.references.NamedDataContainerDataReference;
+import com.grendelscan.utils.StringUtils;
 
 /**
  * @author david
  *
  */
-public class NamedAmfDataContainer extends AbstractDataContainer<NameOrValueReference> implements NamedDataContainer
+public class NamedAmfDataContainer extends AbstractData implements DataContainer<NameOrValueReference>, NamedDataContainer
 {
 
 	private static final long	serialVersionUID	= 1L;
@@ -197,6 +199,32 @@ public class NamedAmfDataContainer extends AbstractDataContainer<NameOrValueRefe
 	public void setName(byte[] name)
 	{
 		throw new NotImplementedException("Not used in AMF");
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.data.Data#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("NamedAmfDataContainer:\n");
+		sb.append(StringUtils.indentLines(childrenDebugString(), 1));
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#childrenDebugString()
+	 */
+	@Override
+	public String childrenDebugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("Name:\n");
+		sb.append(StringUtils.indentLines(name.debugString(), 1));
+		sb.append("\nValue:\n");
+		sb.append(StringUtils.indentLines(value.debugString(), 1));
+		return sb.toString();
 	}
 
 }

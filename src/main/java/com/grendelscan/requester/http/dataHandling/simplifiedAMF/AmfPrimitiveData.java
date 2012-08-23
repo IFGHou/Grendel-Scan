@@ -200,4 +200,13 @@ public class AmfPrimitiveData extends AbstractAmfData implements DataContainer<S
 		// TODO Auto-generated method stub
 		
 	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#childrenDebugString()
+	 */
+	@Override
+	public String childrenDebugString()
+	{
+		return data.debugString();
+	}
 }

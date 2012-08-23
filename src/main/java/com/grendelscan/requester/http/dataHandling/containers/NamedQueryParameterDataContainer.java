@@ -13,11 +13,13 @@ import org.apache.commons.lang.NotImplementedException;
 
 import com.grendelscan.logging.Log;
 import com.grendelscan.requester.http.dataHandling.DataParser;
+import com.grendelscan.requester.http.dataHandling.data.AbstractData;
 import com.grendelscan.requester.http.dataHandling.data.Data;
 import com.grendelscan.requester.http.dataHandling.data.DataUtils;
 import com.grendelscan.requester.http.dataHandling.references.DataReference;
 import com.grendelscan.requester.http.dataHandling.references.NameOrValueReference;
 import com.grendelscan.requester.http.dataHandling.references.NamedDataContainerDataReference;
+import com.grendelscan.utils.StringUtils;
 import com.grendelscan.utils.dataFormating.DataEncodingStream;
 import com.grendelscan.utils.dataFormating.DataFormat;
 import com.grendelscan.utils.dataFormating.DataFormatException;
@@ -28,15 +30,12 @@ import com.grendelscan.utils.dataFormating.DataFormatUtils;
  * @author david
  *
  */
-public class NamedQueryParameterDataContainer extends AbstractDataContainer<NameOrValueReference> 
-	implements NamedDataContainer
+public class NamedQueryParameterDataContainer extends AbstractData implements NamedDataContainer
 {
-	/**
-	 * 
-	 */
 	private static final long	serialVersionUID	= 1L;
 	private Data name;
 	private Data value;
+	private DataFormat childFormat;
 	
 //	public NamedQueryParameterDataContainer(DataContainer<?> parent, byte[] data, int transactionId)
 //	{
@@ -46,9 +45,10 @@ public class NamedQueryParameterDataContainer extends AbstractDataContainer<Name
 //		setReference(new NamedDataContainerDataReference(DataUtils.getBytes(name)));
 //	}
 	
-	public NamedQueryParameterDataContainer(DataContainer<?> parent, byte[] name, byte[] value, int transactionId)
+	public NamedQueryParameterDataContainer(DataContainer<?> parent, byte[] name, byte[] value, int transactionId, DataFormat childFormat)
 	{
 		super(parent, null, transactionId);
+		this.childFormat = childFormat;
 		setName(name);
 		setValue(value);
 		setReference(new NamedDataContainerDataReference(name));
@@ -122,7 +122,7 @@ public class NamedQueryParameterDataContainer extends AbstractDataContainer<Name
 
 	@Override public void setName(byte[] name)
 	{
-		this.name = DataParser.parseRawData(name, this, null, NameOrValueReference.NAME, getTransactionId());
+		this.name = DataParser.parseRawData(name, this, childFormat, NameOrValueReference.NAME, getTransactionId());
 		updateReference();
 	}
 
@@ -132,7 +132,7 @@ public class NamedQueryParameterDataContainer extends AbstractDataContainer<Name
 	@Override
 	public void setValue(byte[] value)
 	{
-		this.value = DataParser.parseRawData(value, this, null, NameOrValueReference.VALUE, getTransactionId());
+		this.value = DataParser.parseRawData(value, this, childFormat, NameOrValueReference.VALUE, getTransactionId());
 	}
 
 	@Override
@@ -253,6 +253,35 @@ public class NamedQueryParameterDataContainer extends AbstractDataContainer<Name
 			Log.error("Very odd problem encoding data: " + e.toString(), e);
 		}
 		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#childrenDebugString()
+	 */
+	@Override
+	public String childrenDebugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("Name:\n");
+		sb.append(StringUtils.indentLines(name.debugString(), 1));
+		sb.append("Value:\n");
+		sb.append(StringUtils.indentLines(value.debugString(), 1));
+		return sb.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.data.Data#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("NamedQueryParameterDataContainer\n");
+		sb.append("\tChild format: ");
+		sb.append(childFormat.formatType);
+		sb.append("\n");
+		sb.append(StringUtils.indentLines(childrenDebugString(), 1));
+		return sb.toString();
 	}
 
 

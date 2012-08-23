@@ -18,6 +18,7 @@ import com.grendelscan.requester.http.dataHandling.simplifiedAMF.dataTypeDefinit
 import com.grendelscan.requester.http.dataHandling.simplifiedAMF.interfaces.Orderable;
 import com.grendelscan.requester.http.dataHandling.simplifiedAMF.output.AmfOutputStreamRegistry;
 import com.grendelscan.utils.AmfUtils;
+import com.grendelscan.utils.StringUtils;
 
 
 public abstract class AmfPrimitiveArray extends AbstractAmfDataContainer<NumberedListDataReference> 
@@ -180,5 +181,22 @@ public abstract class AmfPrimitiveArray extends AbstractAmfDataContainer<Numbere
 	}
 
 
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#childrenDebugString()
+	 */
+	@Override
+	public String childrenDebugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		int i = 0;
+		for (AbstractAmfData child: getChildren())
+		{
+			sb.append("\n\t[");
+			sb.append(i++);
+			sb.append("]\n");
+			sb.append(StringUtils.indentLines(child.debugString(), 1));
+		}
+		return sb.toString();
+	}
 
 }

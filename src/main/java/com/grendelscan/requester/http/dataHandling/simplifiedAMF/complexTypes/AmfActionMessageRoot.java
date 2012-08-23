@@ -22,6 +22,7 @@ import com.grendelscan.requester.http.dataHandling.simplifiedAMF.arrays.AmfMessa
 import com.grendelscan.requester.http.dataHandling.simplifiedAMF.dataTypeDefinitions.AmfDataType;
 import com.grendelscan.requester.http.dataHandling.simplifiedAMF.messages.AmfActionMessageHeader;
 import com.grendelscan.requester.http.dataHandling.simplifiedAMF.output.AmfOutputStreamRegistry;
+import com.grendelscan.utils.StringUtils;
 
 import flex.messaging.io.amf.ActionMessage;
 import flex.messaging.io.amf.MessageBody;
@@ -212,5 +213,20 @@ public class AmfActionMessageRoot extends AbstractAmfDataContainer<AmfActionMess
 		{
 			Log.error("Weird problem writing AMF: " + e.toString(), e);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.containers.DataContainer#childrenDebugString()
+	 */
+	@Override
+	public String childrenDebugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("AMF action message root:\n");
+		sb.append("\tHeaders:");
+		sb.append(StringUtils.indentLines(headers.childrenDebugString(), 1));
+		sb.append("\n\tBodies:");
+		sb.append(StringUtils.indentLines(bodies.childrenDebugString(), 1));
+		return sb.toString();
 	}
 }

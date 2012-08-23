@@ -16,6 +16,8 @@ import com.grendelscan.requester.http.dataHandling.references.DataReference;
 import com.grendelscan.requester.http.dataHandling.references.NamedDataContainerDataReference;
 import com.grendelscan.utils.ByteArrayUtils;
 import com.grendelscan.utils.StringUtils;
+import com.grendelscan.utils.dataFormating.DataFormat;
+import com.grendelscan.utils.dataFormating.DataFormatType;
 
 /**
  * @author david
@@ -25,11 +27,13 @@ public class UrlEncodedQueryStringDataContainer extends AbstractDataContainer<Na
 	implements HtmlQueryContainer<NamedDataContainerDataReference>, ExpandableDataContainer<NamedDataContainerDataReference>
 {
 
-	/**
-	 * 
-	 */
 	private static final long	serialVersionUID	= 1L;
 
+	private static final DataFormat UrlQueryParamFormat = new DataFormat();
+	static
+	{
+		UrlQueryParamFormat.formatType = DataFormatType.URL_BASIC_ENCODED;
+	}
 	/**
 	 * @param parent
 	 */
@@ -53,7 +57,7 @@ public class UrlEncodedQueryStringDataContainer extends AbstractDataContainer<Na
 			if (param.length == 0)
 				continue; //Ignore and fix extra ampersands
 			byte[][] nv = ByteArrayUtils.splitOnFirst(param, (byte) '=');
-			children.add(new NamedQueryParameterDataContainer(this, nv[0], nv[1], getTransactionId()));
+			children.add(new NamedQueryParameterDataContainer(this, nv[0], nv[1], getTransactionId(), UrlQueryParamFormat));
 		}
 	}
 
@@ -135,7 +139,7 @@ public class UrlEncodedQueryStringDataContainer extends AbstractDataContainer<Na
 			Log.error("Very, very weird problem creating parameter: " + e.toString(), e);
 		}
 		children.add(new NamedQueryParameterDataContainer(this, name.getBytes(StringUtils.getDefaultCharset()), 
-				value.getBytes(StringUtils.getDefaultCharset()), getTransactionId()));
+				value.getBytes(StringUtils.getDefaultCharset()), getTransactionId(), UrlQueryParamFormat));
 	}
 
 	/* (non-Javadoc)
@@ -171,12 +175,16 @@ public class UrlEncodedQueryStringDataContainer extends AbstractDataContainer<Na
 					Log.error("Very odd problem writing ampersand", e);
 				}
 			}
-
 			child.writeBytes(out);
 		}
-		
 	}
-
-		
-
+	
+	@Override public String debugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("UrlEncodedQueryStringDataContainer -\n");
+		sb.append(StringUtils.indentLines(abstractDataDebugString(), 1));
+		sb.append(StringUtils.indentLines(childrenDebugString(), 1));
+		return sb.toString();
+	}
 }

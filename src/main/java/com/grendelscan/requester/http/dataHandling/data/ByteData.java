@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import com.grendelscan.logging.Log;
 import com.grendelscan.requester.http.dataHandling.containers.DataContainer;
 import com.grendelscan.requester.http.dataHandling.references.DataReference;
+import com.grendelscan.utils.StringUtils;
 
 /**
  * @author david
@@ -58,6 +59,19 @@ public class ByteData extends AbstractData implements MutableData
 		{
 			Log.error("Very weird problem writing bytes: " + e.toString(), e);
 		}
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.data.Data#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("ByteData:");
+		sb.append(StringUtils.indentLines(new String(bytes), 1));
+		return sb.toString();
 	}
 
 
