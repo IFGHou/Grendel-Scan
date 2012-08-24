@@ -70,7 +70,8 @@ public class TokenSubmitter extends TestModule implements ByRequestDataTest
 		handlePause_isRunning();
 		StandardHttpTransaction originalTransaction = Scan.getInstance().getTransactionRecord().getTransaction(transactionId);
 		StandardHttpTransaction testTransaction = originalTransaction.cloneFullRequest(TransactionSource.MISC_TEST, testJobId);
-		MutableData newTestData = (MutableData) DataContainerUtils.resolveReferenceCousin(testTransaction, datum);
+		MutableData newTestData = (MutableData) DataContainerUtils.resolveReferenceChain(
+				testTransaction.getTransactionContainer(), datum.getReferenceChain());
 		testTransaction.setRequestOptions(requestOptions);
 		String token = TokenTesting.getInstance().generateToken();
 		newTestData.setBytes(token.getBytes());

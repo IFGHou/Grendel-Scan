@@ -37,4 +37,14 @@ public class AmfBodyComponentReference implements DataReference
 	{
 		return location;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.references.DataReference#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		return "Location: " + location.toString();
+	}
+
 }

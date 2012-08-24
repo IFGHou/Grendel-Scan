@@ -90,7 +90,8 @@ public class DirectoryTraversal extends TestModule implements ByRequestDataTest
 
 		StandardHttpTransaction antitestTransaction = originalTransaction.cloneFullRequest(TransactionSource.MISC_TEST, testJobId);
 		String antiValue = antiPattern.replace("%%value%%", oldValue);
-		MutableData antiTestData = (MutableData) DataContainerUtils.resolveReferenceCousin(antitestTransaction, datum);
+		MutableData antiTestData = (MutableData) DataContainerUtils.resolveReferenceChain(
+				antitestTransaction.getTransactionContainer(), datum.getReferenceChain());
 		antiTestData.setBytes(antiValue.getBytes());
 		RequestOptions testRequestOptions = requestOptions.clone();
 		testRequestOptions.followRedirects = originalTransaction.hasRedirectResponse();
@@ -104,7 +105,8 @@ public class DirectoryTraversal extends TestModule implements ByRequestDataTest
 				for (String pattern : patterns)
 				{
 					StandardHttpTransaction testTransaction = originalTransaction.cloneFullRequest(TransactionSource.MISC_TEST, testJobId);
-					MutableData testData = (MutableData) DataContainerUtils.resolveReferenceCousin(testTransaction, datum);
+					MutableData testData = (MutableData) DataContainerUtils.resolveReferenceChain(
+							testTransaction.getTransactionContainer(), datum.getReferenceChain());
 					String testValue = pattern.replace("%%value%%", oldValue);
 					testData.setBytes(testValue.getBytes());
 					testTransaction.setRequestOptions(testRequestOptions);

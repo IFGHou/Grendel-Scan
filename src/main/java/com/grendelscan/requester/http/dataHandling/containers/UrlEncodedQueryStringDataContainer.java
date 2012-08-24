@@ -184,6 +184,7 @@ public class UrlEncodedQueryStringDataContainer extends AbstractDataContainer<Na
 		StringBuilder sb = new StringBuilder();
 		sb.append("UrlEncodedQueryStringDataContainer -\n");
 		sb.append(StringUtils.indentLines(abstractDataDebugString(), 1));
+		sb.append("\n");
 		sb.append(StringUtils.indentLines(childrenDebugString(), 1));
 		return sb.toString();
 	}

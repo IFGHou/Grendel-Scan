@@ -225,7 +225,8 @@ public class GenericFuzzer extends TestModule implements ByRequestDataTest
 		{
 			handlePause_isRunning();
 			StandardHttpTransaction testTransaction = transaction.cloneFullRequest(TransactionSource.MISC_TEST, testJobId);
-			MutableData testData = (MutableData) DataContainerUtils.resolveReferenceCousin(testTransaction, datum);
+			MutableData testData = (MutableData) DataContainerUtils.resolveReferenceChain(
+					testTransaction.getTransactionContainer(), datum.getReferenceChain());
 			testData.setBytes((originalValue + fuzzString).getBytes());
 			RequestOptions testRequestOptions = requestOptions.clone();
 			testRequestOptions.followRedirects = transaction.getRedirectChildId() > 0;

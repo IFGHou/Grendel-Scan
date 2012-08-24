@@ -264,7 +264,7 @@ public class NamedQueryParameterDataContainer extends AbstractData implements Na
 		StringBuilder sb = new StringBuilder();
 		sb.append("Name:\n");
 		sb.append(StringUtils.indentLines(name.debugString(), 1));
-		sb.append("Value:\n");
+		sb.append("\nValue:\n");
 		sb.append(StringUtils.indentLines(value.debugString(), 1));
 		return sb.toString();
 	}
@@ -276,8 +276,9 @@ public class NamedQueryParameterDataContainer extends AbstractData implements Na
 	public String debugString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("NamedQueryParameterDataContainer\n");
-		sb.append("\tChild format: ");
+		sb.append("NamedQueryParameterDataContainer -\n");
+		sb.append(StringUtils.indentLines(abstractDataDebugString(), 1));
+		sb.append("\n\tChild format: ");
 		sb.append(childFormat.formatType);
 		sb.append("\n");
 		sb.append(StringUtils.indentLines(childrenDebugString(), 1));

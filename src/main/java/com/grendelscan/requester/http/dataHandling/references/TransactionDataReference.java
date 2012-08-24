@@ -33,4 +33,14 @@ public class TransactionDataReference implements DataReference
 	{
 		return body;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.references.DataReference#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		return body ? "Is the body query string" : "Is the URL query string";
+	}
+
 }

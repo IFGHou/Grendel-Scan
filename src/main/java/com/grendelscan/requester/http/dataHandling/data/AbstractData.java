@@ -92,10 +92,24 @@ public abstract class AbstractData implements Data
 	public String abstractDataDebugString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("Parent:\n");
-		sb.append(StringUtils.indentLines(parent.debugString(), 1));
-		sb.append("\nReference: ");
-		sb.append(reference.toString());
+//		sb.append("Parent:\n");
+//		if (parent == null)
+//		{
+//			sb.append("\t<null>\n");
+//		}
+//		else
+//		{
+//			sb.append(StringUtils.indentLines(parent.debugString(), 1));
+//		}
+		sb.append("Reference: ");
+		if (reference == null)
+		{
+			sb.append("\t<null>");
+		}
+		else
+		{
+			sb.append(reference.debugString());
+		}
 		sb.append("\nTransaction ID: ");
 		sb.append(transactionId);
 		return sb.toString();

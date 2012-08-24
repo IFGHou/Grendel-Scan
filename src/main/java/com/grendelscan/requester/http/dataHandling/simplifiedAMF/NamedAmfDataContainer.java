@@ -220,6 +220,8 @@ public class NamedAmfDataContainer extends AbstractData implements DataContainer
 	public String childrenDebugString()
 	{
 		StringBuilder sb = new StringBuilder();
+		sb.append("Named AMF data container-\n");
+		sb.append(StringUtils.indentLines(abstractDataDebugString(), 1));
 		sb.append("Name:\n");
 		sb.append(StringUtils.indentLines(name.debugString(), 1));
 		sb.append("\nValue:\n");

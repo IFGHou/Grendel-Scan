@@ -55,11 +55,11 @@ public abstract class AbstractDataContainer<ReferenceType extends DataReference>
 	public String childrenDebugString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("Children:\n");
+		sb.append("Children:");
 		for(Data child: children)
 		{
-			sb.append(StringUtils.indentLines(child.debugString(), 1));
 			sb.append("\n");
+			sb.append(StringUtils.indentLines(child.debugString(), 1));
 		}
 		return sb.toString();
 	}

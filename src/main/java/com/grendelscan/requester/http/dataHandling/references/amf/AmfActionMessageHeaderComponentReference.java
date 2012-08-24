@@ -40,4 +40,14 @@ public class AmfActionMessageHeaderComponentReference implements DataReference
 	{
 		return location.equals(HeaderLocation.MUST_UNDERSTAND);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.references.DataReference#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		return "Location is " + location.toString();
+	}
+
 }

@@ -12,6 +12,5 @@ import java.io.Serializable;
 public interface DataReference extends Serializable
 {
 	public DataReference clone();
-	@Override
-	public String toString();
+	public String debugString();
 }

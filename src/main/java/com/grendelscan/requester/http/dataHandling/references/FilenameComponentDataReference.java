@@ -31,4 +31,13 @@ public class FilenameComponentDataReference implements DataReference
 		return new FilenameComponentDataReference(name);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.references.DataReference#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		return name ? "Is the file name" : "Is the file extension";
+	}
+
 }

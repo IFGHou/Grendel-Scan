@@ -49,6 +49,10 @@ public class DataFormatUtils
 	
 	private static final float WORD_PERCENTAGE_THRESHOLD = 0.30F;
 
+	private final static Pattern CONTAINS_NUMBERS_PATTERN = Pattern.compile("[0-9]");
+	private final static Pattern CONTAINS_UPPERCASE_PATTERN = Pattern.compile("[A-Z]");
+	private final static Pattern CONTAINS_LOWERCASE_PATTERN = Pattern.compile("[a-z]");
+
 	
 	public static DataFormat getDataFormat(byte[] data, String mimeType) throws DataFormatException
 	{
@@ -133,36 +137,34 @@ public class DataFormatUtils
 			format.formatType = DataFormatType.HEX_UPPER_SLASH_X;
 		}
 		
-		
-		else if (dataString.length() > 2 && wordPercentage < WORD_PERCENTAGE_THRESHOLD && 
-				BASE64_PATTERN.matcher(dataString).matches())
+		else if(potentialBase64(dataString, wordPercentage))
 		{
-			format.formatType = DataFormatType.BASE64;
-		}
-		
-		
-		else if (dataString.length() > 2 && wordPercentage < WORD_PERCENTAGE_THRESHOLD && 
-				BASE64_PRETTY_PATTERN.matcher(dataString).matches())
-		{
-			Matcher m = BASE64_PRETTY_LINE_PATTERN.matcher(dataString);
-			if (m.find())
+			if (BASE64_PATTERN.matcher(dataString).matches())
 			{
-				format.options.BASE64_LINE_LENGTH = m.group(1).length();
-				format.options.BASE64_LINE_DELIMITER = m.group(2).getBytes();
+				format.formatType = DataFormatType.BASE64;
 			}
-			else
+			
+			
+			else if (BASE64_PRETTY_PATTERN.matcher(dataString).matches())
 			{
-				throw new IllegalStateException("Apparent bug in parsing Base64 pretty");
+				Matcher m = BASE64_PRETTY_LINE_PATTERN.matcher(dataString);
+				if (m.find())
+				{
+					format.options.BASE64_LINE_LENGTH = m.group(1).length();
+					format.options.BASE64_LINE_DELIMITER = m.group(2).getBytes();
+				}
+				else
+				{
+					throw new IllegalStateException("Apparent bug in parsing Base64 pretty");
+				}
+				format.formatType = DataFormatType.BASE64_PRETTY;
 			}
-			format.formatType = DataFormatType.BASE64_PRETTY;
+	
+			else if (BASE64_WEB_PATTERN.matcher(dataString).matches())
+			{
+				format.formatType = DataFormatType.BASE64_WEB;
+			}
 		}
-
-		else if (dataString.length() > 2 && wordPercentage < WORD_PERCENTAGE_THRESHOLD && 
-				BASE64_WEB_PATTERN.matcher(dataString).matches())
-		{
-			format.formatType = DataFormatType.BASE64_WEB;
-		}
-
 		
 		else if (URL_ENCODED_BASE_PATTERN.matcher(dataString).matches() &&
 				URL_ENCODED_ESCAPE_PATTERN.matcher(dataString).matches())
@@ -192,6 +194,16 @@ public class DataFormatUtils
 		return format;
 	}
 	
+	public static boolean potentialBase64(String dataString, float wordPercentage)
+	{
+		return 
+				dataString.length() > 2 
+				&& wordPercentage < WORD_PERCENTAGE_THRESHOLD
+				&& CONTAINS_LOWERCASE_PATTERN.matcher(dataString).matches()
+				&& CONTAINS_NUMBERS_PATTERN.matcher(dataString).matches()
+				&& CONTAINS_UPPERCASE_PATTERN.matcher(dataString).matches()
+				;
+	}
 	
 	public static byte[] decodeData(byte[] data, DataFormatType format) throws DataFormatException
 	{
@@ -307,12 +319,6 @@ public class DataFormatUtils
 		return d;
 	}
 
-
-	
-	private DataFormatUtils()
-	{
-		
-	}
 
 	
 }

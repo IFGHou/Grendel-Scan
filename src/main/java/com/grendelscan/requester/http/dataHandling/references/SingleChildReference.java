@@ -30,4 +30,14 @@ public class SingleChildReference implements DataReference
 	{
 		return instance;
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.references.DataReference#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		return "Single child reference";
+	}
+
 }

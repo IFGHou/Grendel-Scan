@@ -153,7 +153,8 @@ public class Tautologies extends TestModule implements ByRequestDataTest
 		RequestOptions testRequestOptions = requestOptions.clone();
 		testRequestOptions.followRedirects = transaction.getRedirectChildId() > 0;
 		StandardHttpTransaction firstTautologyTransaction = transaction.cloneFullRequest(TransactionSource.MISC_TEST, testJobId);
-		MutableData firstTautologyData = (MutableData) DataContainerUtils.resolveReferenceCousin(firstTautologyTransaction, datum);
+		MutableData firstTautologyData = (MutableData) DataContainerUtils.resolveReferenceChain(
+				firstTautologyTransaction.getTransactionContainer(), datum.getReferenceChain());
 		firstTautologyData.setBytes(ArrayUtils.addAll(DataUtils.getBytes(datum), tautology.getBytes()));
 		firstTautologyTransaction.setRequestOptions(testRequestOptions);
 		firstTautologyTransaction.execute();
@@ -177,7 +178,8 @@ public class Tautologies extends TestModule implements ByRequestDataTest
 
 		StandardHttpTransaction antiTautologyTransaction = transaction.cloneFullRequest(TransactionSource.MISC_TEST, testJobId);
 		
-		Data antiTautologyData = DataContainerUtils.resolveReferenceCousin(antiTautologyTransaction, datum);
+		Data antiTautologyData = DataContainerUtils.resolveReferenceChain(
+				antiTautologyTransaction.getTransactionContainer(), datum.getReferenceChain());
 		firstTautologyData.setBytes(ArrayUtils.addAll(DataUtils.getBytes(datum), antiTautology.getBytes()));
 
 		antiTautologyTransaction.setRequestOptions(testRequestOptions);

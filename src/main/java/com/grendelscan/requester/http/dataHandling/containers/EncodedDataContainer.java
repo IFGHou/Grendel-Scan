@@ -109,16 +109,16 @@ public class EncodedDataContainer extends AbstractData implements DataContainer<
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("EncodedDataContainer\n");
-		sb.append("\tFormat: ");
+		sb.append(StringUtils.indentLines(abstractDataDebugString(), 1));
+		sb.append("\n\tFormat: ");
 		sb.append(format.formatType);
-		sb.append("\n");
-		sb.append("\tRaw Data:\n");
+		sb.append("\n\tRaw Data:\n");
 		sb.append(StringUtils.indentLines(child.debugString(), 2));
 
 		ExposedByteArrayOutputStream out = new ExposedByteArrayOutputStream();
 		writeBytes(out);
 		
-		sb.append("\tEncoded Data:\n");
+		sb.append("\n\tEncoded Data:\n");
 		sb.append(StringUtils.indentLines(out.toString(), 2));
 		return sb.toString();
 	}
@@ -150,6 +150,7 @@ public class EncodedDataContainer extends AbstractData implements DataContainer<
 	@Override
 	public String childrenDebugString()
 	{
+		// Not usually called directly
 		return child.debugString();
 	}
 }

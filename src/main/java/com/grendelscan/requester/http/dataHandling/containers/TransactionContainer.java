@@ -299,8 +299,8 @@ public class TransactionContainer extends AbstractData implements DataContainer<
 		StringBuilder sb = new StringBuilder();
 		sb.append("TransactionContainer:\n");
 		sb.append(StringUtils.indentLines(abstractDataDebugString(), 1));
+		sb.append("\n");
 		sb.append(StringUtils.indentLines(childrenDebugString(), 1));
-		
 		return sb.toString();
 	}
 
@@ -320,11 +320,26 @@ public class TransactionContainer extends AbstractData implements DataContainer<
 	public String childrenDebugString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("URL container:\n");
-		sb.append(StringUtils.indentLines(urlQueryDataContainer.debugString(), 1));
+		sb.append("Transaction Container -\n");
+		sb.append(StringUtils.indentLines(abstractDataDebugString(), 1));
+		sb.append("\nURL container:\n");
+		if (urlQueryDataContainer == null)
+		{
+			sb.append("\t<null>");
+		}
+		else
+		{
+			sb.append(StringUtils.indentLines(urlQueryDataContainer.debugString(), 1));
+		}
 		sb.append("\nBody container:\n");
-		sb.append(StringUtils.indentLines(bodyData.debugString(), 1));
-		
+		if (bodyData == null)
+		{
+			sb.append("\t<null>");
+		}
+		else
+		{
+			sb.append(StringUtils.indentLines(bodyData.debugString(), 1));
+		}
 		return sb.toString();
 	}
 	

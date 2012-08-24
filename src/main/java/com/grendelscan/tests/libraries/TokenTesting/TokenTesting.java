@@ -248,7 +248,8 @@ public class TokenTesting implements DatabaseUser
 				duplicateTokenTest(originalContext, newToken, stringSource, source, testJobId);
 		StandardHttpTransaction newInputTransaction = testTransactions[0];
 		StandardHttpTransaction newOutputTransaction = testTransactions[1];
-		Data newTestDatum = DataContainerUtils.resolveReferenceCousin(newInputTransaction, originalContext.getRequestDatum());
+		Data newTestDatum = DataContainerUtils.resolveReferenceChain(
+				newInputTransaction.getTransactionContainer(), originalContext.getRequestDatum().getReferenceChain());
 		recordTokenTest(newToken, newTestDatum);
 		
 		return findTokenContexts(newOutputTransaction).getAllOfToken(newToken).getAllOfType(originalContext.getContextType()).getCount() > 0;

@@ -155,6 +155,8 @@ public class UrlFileNameDataContainer extends AbstractData implements DataContai
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("UrlFileNameDataContainer\n");
+		sb.append(StringUtils.indentLines(abstractDataDebugString(), 1));
+		sb.append("\n");
 		sb.append(StringUtils.indentLines(childrenDebugString(), 1));
 		return sb.toString();
 	}
@@ -168,7 +170,7 @@ public class UrlFileNameDataContainer extends AbstractData implements DataContai
 		StringBuilder sb = new StringBuilder();
 		sb.append("Name:\n");
 		sb.append(StringUtils.indentLines(name.debugString(), 1));
-		sb.append("Extension:\n");
+		sb.append("\nExtension:\n");
 		sb.append(StringUtils.indentLines(extension.debugString(), 1));
 		return sb.toString();
 	}

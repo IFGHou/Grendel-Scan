@@ -29,4 +29,13 @@ public class UrlPathDataReference implements DataReference
 	{
 		return directory;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.references.DataReference#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		return directory ? "Is the directory component" : "Is the filename component";
+	}
 }

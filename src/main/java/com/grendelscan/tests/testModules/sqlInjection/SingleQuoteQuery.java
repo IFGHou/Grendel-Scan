@@ -111,7 +111,8 @@ public class SingleQuoteQuery extends TestModule implements ByRequestDataTest
 	private StandardHttpTransaction runTestTransaction(StandardHttpTransaction transaction, MutableData queryDatum, String attack, int testJobId) throws UnrequestableTransaction, InterruptedScanException
 	{
 		StandardHttpTransaction testTransaction = transaction.cloneFullRequest(TransactionSource.MISC_TEST, testJobId);
-		MutableData testTransactionQueryDatum = (MutableData) DataContainerUtils.resolveReferenceCousin(testTransaction, queryDatum);
+		MutableData testTransactionQueryDatum = (MutableData) DataContainerUtils.resolveReferenceChain(
+				testTransaction.getTransactionContainer(), queryDatum.getReferenceChain());
 		
 		testTransactionQueryDatum.setBytes(ArrayUtils.addAll(DataUtils.getBytes(queryDatum), attack.getBytes()));
 		testTransaction.setRequestOptions(requestOptions);

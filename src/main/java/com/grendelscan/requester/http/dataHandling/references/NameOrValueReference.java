@@ -34,4 +34,14 @@ public class NameOrValueReference implements DataReference
 	{
 		return new NameOrValueReference(name);
 	}
+	
+	/* (non-Javadoc)
+	 * @see com.grendelscan.requester.http.dataHandling.references.DataReference#debugString()
+	 */
+	@Override
+	public String debugString()
+	{
+		return name ? "Is the name component" : "Is the value component";
+	}
+
 }

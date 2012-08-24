@@ -115,10 +115,10 @@ public class DataContainerUtils
 		return chain;
 	}
 	
-	public static Data resolveReferenceCousin(StandardHttpTransaction transaction, Data datum)
-	{
-		return resolveReferenceChain(transaction.getTransactionContainer(), datum.getReferenceChain());
-	}
+//	public static Data resolveReferenceCousin(StandardHttpTransaction transaction, Data datum)
+//	{
+//		return resolveReferenceChain(transaction.getTransactionContainer(), datum.getReferenceChain());
+//	}
 
 	public static Data resolveReferenceChain(TransactionContainer root, DataReferenceChain chain)
 	{
@@ -131,6 +131,7 @@ public class DataContainerUtils
 			if (i == 0)
 			{
 				return child;
+				
 			}
 			if (child instanceof DataContainer)
 			{

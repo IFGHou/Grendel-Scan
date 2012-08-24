@@ -146,7 +146,9 @@ public class UrlFilePathContainer extends AbstractData implements DataContainer<
 	public String debugString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("UrlFilePathContainer:");
+		sb.append("UrlFilePathContainer -\n");
+		sb.append(StringUtils.indentLines(abstractDataDebugString(), 1));
+		sb.append("\n");
 		sb.append(StringUtils.indentLines(childrenDebugString(), 1));
 		return sb.toString();
 
@@ -159,9 +161,9 @@ public class UrlFilePathContainer extends AbstractData implements DataContainer<
 	public String childrenDebugString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("Directory container:");
+		sb.append("Directory container:\n");
 		sb.append(StringUtils.indentLines(dirContainer.debugString(), 1));
-		sb.append("Filename container:");
+		sb.append("\nFilename container:\n");
 		sb.append(StringUtils.indentLines(fileContainer.debugString(), 1));
 		return sb.toString();
 	}

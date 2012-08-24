@@ -69,8 +69,16 @@ public class ByteData extends AbstractData implements MutableData
 	public String debugString()
 	{
 		StringBuilder sb = new StringBuilder();
-		sb.append("ByteData:");
-		sb.append(StringUtils.indentLines(new String(bytes), 1));
+		sb.append("ByteData:\n");
+		sb.append(StringUtils.indentLines(abstractDataDebugString(), 1));
+		if (bytes == null)
+		{
+			sb.append("\t<null>");
+		}
+		else
+		{
+			sb.append(StringUtils.indentLines(new String(bytes), 1));
+		}
 		return sb.toString();
 	}
 
