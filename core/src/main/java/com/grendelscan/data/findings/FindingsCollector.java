@@ -60,7 +60,7 @@ public class FindingsCollector extends DatabaseBackedMap<Integer, Finding> imple
     /*
      * (non-Javadoc)
      * 
-     * @see com.grendelscan.GUI.UpdateService.DataProvider#getLastModified()
+     * @see com.grendelscan.ui.UpdateService.DataProvider#getLastModified()
      */
     @Override
     public long getLastModified()

@@ -36,7 +36,7 @@ public class AllTransactionTable extends AbstractTransactionTable
     /*
      * (non-Javadoc)
      * 
-     * @see com.grendelscan.GUI.http.transactionTable.AbstractTransactionTable# addContextMenuItems()
+     * @see com.grendelscan.ui.http.transactionTable.AbstractTransactionTable# addContextMenuItems()
      */
     @Override
     protected void addContextMenuItems(final Menu menu, final int transactionID)
@@ -59,7 +59,7 @@ public class AllTransactionTable extends AbstractTransactionTable
     /*
      * (non-Javadoc)
      * 
-     * @see com.grendelscan.GUI.customControls.dataTable.AbstractDataTable#initGUIDone(int)
+     * @see com.grendelscan.ui.customControls.dataTable.AbstractDataTable#initGUIDone(int)
      */
     @Override
     protected int initGUIBottomControls(final int top)
@@ -70,7 +70,7 @@ public class AllTransactionTable extends AbstractTransactionTable
     /*
      * (non-Javadoc)
      * 
-     * @see com.grendelscan.GUI.http.transactionTable.AbstractTransactionTable# customInitGUI()
+     * @see com.grendelscan.ui.http.transactionTable.AbstractTransactionTable# customInitGUI()
      */
     @Override
     protected int initGUIStart(int top)

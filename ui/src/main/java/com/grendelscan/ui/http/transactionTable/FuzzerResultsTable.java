@@ -25,7 +25,7 @@ public class FuzzerResultsTable extends AbstractTransactionTable
 	}
 
 	/* (non-Javadoc)
-	 * @see com.grendelscan.GUI.http.transactionTable.AbstractTransactionTable#addContextMenuItems(org.eclipse.swt.widgets.Menu, int)
+	 * @see com.grendelscan.ui.http.transactionTable.AbstractTransactionTable#addContextMenuItems(org.eclipse.swt.widgets.Menu, int)
 	 */
 	@Override
 	protected void addContextMenuItems(Menu menu, int transactionID)
@@ -35,7 +35,7 @@ public class FuzzerResultsTable extends AbstractTransactionTable
 	}
 
 	/* (non-Javadoc)
-	 * @see com.grendelscan.GUI.customControls.dataTable.AbstractDataTable#initGUIDone(int)
+	 * @see com.grendelscan.ui.customControls.dataTable.AbstractDataTable#initGUIDone(int)
 	 */
 	@Override
 	protected int initGUIBottomControls(int top)

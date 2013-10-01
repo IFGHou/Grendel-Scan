@@ -77,7 +77,7 @@ public class NetworkSettingsComposite extends com.grendelscan.ui.customControls.
     }
 
     /**
-     * Overriding checkSubclass allows this class to extend com.grendelscan.GUI.customControls.basic.GComposite
+     * Overriding checkSubclass allows this class to extend com.grendelscan.ui.customControls.basic.GComposite
      */
     @Override
     protected void checkSubclass()

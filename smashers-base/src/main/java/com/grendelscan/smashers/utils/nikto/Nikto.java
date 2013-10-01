@@ -16,13 +16,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.csvreader.CsvReader;
+import com.grendelscan.commons.ConfigurationManager;
 import com.grendelscan.commons.FileUtils;
+import com.grendelscan.commons.http.HttpUtils;
 import com.grendelscan.commons.http.RequestOptions;
 import com.grendelscan.commons.http.responseCompare.HttpResponseScoreUtils;
 import com.grendelscan.commons.http.transactions.StandardHttpTransaction;
 import com.grendelscan.commons.http.transactions.UnrequestableTransaction;
 import com.grendelscan.data.database.collections.DatabaseBackedMap;
-import com.grendelscan.scan.ConfigurationManager;
 import com.grendelscan.scan.InterruptedScanException;
 import com.grendelscan.scan.Scan;
 import com.grendelscan.scan.TransactionSource;

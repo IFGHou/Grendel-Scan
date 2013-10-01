@@ -32,7 +32,6 @@ import java.util.HashMap;
 
 import javax.security.auth.x500.X500Principal;
 
-import org.apache.log4j.lf5.viewer.configure.ConfigurationManager;
 import org.bouncycastle.asn1.x509.BasicConstraints;
 import org.bouncycastle.asn1.x509.X509Extensions;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -41,6 +40,8 @@ import org.bouncycastle.x509.extension.AuthorityKeyIdentifierStructure;
 import org.bouncycastle.x509.extension.SubjectKeyIdentifierStructure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.grendelscan.commons.ConfigurationManager;
 
 public class CertificateAuthority
 {

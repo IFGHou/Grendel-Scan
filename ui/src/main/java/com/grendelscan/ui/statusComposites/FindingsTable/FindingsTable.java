@@ -36,7 +36,7 @@ public class FindingsTable extends AbstractDataTable<FindingsTableColumns, Findi
     /*
      * (non-Javadoc)
      * 
-     * @see com.grendelscan.GUI.customControls.dataTable.AbstractDataTable#createColumns()
+     * @see com.grendelscan.ui.customControls.dataTable.AbstractDataTable#createColumns()
      */
     @Override
     protected void createColumns()
@@ -85,7 +85,7 @@ public class FindingsTable extends AbstractDataTable<FindingsTableColumns, Findi
     /*
      * (non-Javadoc)
      * 
-     * @see com.grendelscan.GUI.customControls.dataTable.AbstractDataTable#initGUIDone(int)
+     * @see com.grendelscan.ui.customControls.dataTable.AbstractDataTable#initGUIDone(int)
      */
     @Override
     protected int initGUIBottomControls(final int top)
@@ -96,7 +96,7 @@ public class FindingsTable extends AbstractDataTable<FindingsTableColumns, Findi
     /*
      * (non-Javadoc)
      * 
-     * @see com.grendelscan.GUI.customControls.dataTable.AbstractDataTable#initGUIStart(int)
+     * @see com.grendelscan.ui.customControls.dataTable.AbstractDataTable#initGUIStart(int)
      */
     @Override
     protected int initGUIStart(final int top)
@@ -107,7 +107,7 @@ public class FindingsTable extends AbstractDataTable<FindingsTableColumns, Findi
     /*
      * (non-Javadoc)
      * 
-     * @see com.grendelscan.GUI.customControls.dataTable.AbstractDataTable#getContextMenuHandler()
+     * @see com.grendelscan.ui.customControls.dataTable.AbstractDataTable#getContextMenuHandler()
      */
     @Override
     protected MenuDetectListener makeContextMenuHandler()
@@ -118,7 +118,7 @@ public class FindingsTable extends AbstractDataTable<FindingsTableColumns, Findi
     /*
      * (non-Javadoc)
      * 
-     * @see com.grendelscan.GUI.customControls.dataTable.AbstractDataTable#getMouseAdapter()
+     * @see com.grendelscan.ui.customControls.dataTable.AbstractDataTable#getMouseAdapter()
      */
     @Override
     protected MouseAdapter makeMouseAdapter()

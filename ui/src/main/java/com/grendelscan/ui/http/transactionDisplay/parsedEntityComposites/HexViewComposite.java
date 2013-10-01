@@ -47,7 +47,7 @@ public class HexViewComposite extends GComposite implements ParsedEntityComposit
 	}
 	
 	/* (non-Javadoc)
-     * @see com.grendelscan.GUI.http.transactionDisplay.parsedEntityComposites.ParsedEntityComposite#updateData(byte[])
+     * @see com.grendelscan.ui.http.transactionDisplay.parsedEntityComposites.ParsedEntityComposite#updateData(byte[])
      */
 	@Override
 	public void updateData(byte[] data)

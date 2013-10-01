@@ -39,6 +39,7 @@ import org.xml.sax.SAXException;
 import com.grendelscan.commons.FileUtils;
 import com.grendelscan.commons.http.CookieJar;
 import com.grendelscan.commons.http.HttpUtils;
+import com.grendelscan.commons.http.RequestOptions;
 import com.grendelscan.commons.http.URIStringUtils;
 import com.grendelscan.commons.http.apache_overrides.client.CustomHttpClient;
 import com.grendelscan.commons.http.apache_overrides.serializable.SerializableBasicCookie;

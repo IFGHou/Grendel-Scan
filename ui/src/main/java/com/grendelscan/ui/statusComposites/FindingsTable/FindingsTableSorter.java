@@ -45,7 +45,7 @@ public class FindingsTableSorter extends ColumnComparator<FindingsTableColumns>
 	}
 
 	/* (non-Javadoc)
-	 * @see com.grendelscan.GUI.customControls.dataTable.ColumnComparator#getDefaultColumn()
+	 * @see com.grendelscan.ui.customControls.dataTable.ColumnComparator#getDefaultColumn()
 	 */
 	@Override
 	public FindingsTableColumns getDefaultColumn()

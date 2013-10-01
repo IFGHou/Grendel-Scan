@@ -1,4 +1,4 @@
-package com.grendelscan.scan;
+package com.grendelscan.commons;
 
 
 import java.util.List;
@@ -8,8 +8,6 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.grendelscan.commons.StringUtils;
 
 public class ConfigurationManager 
 {

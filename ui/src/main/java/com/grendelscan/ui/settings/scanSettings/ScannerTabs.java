@@ -36,7 +36,7 @@ public class ScannerTabs extends GComposite implements GrendelSettingsControl
     }
 
     /**
-     * Overriding checkSubclass allows this class to extend com.grendelscan.GUI.customControls.basic.GComposite
+     * Overriding checkSubclass allows this class to extend com.grendelscan.ui.customControls.basic.GComposite
      */
     @Override
     protected void checkSubclass()

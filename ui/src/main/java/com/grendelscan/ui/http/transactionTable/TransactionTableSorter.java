@@ -60,7 +60,7 @@ public class TransactionTableSorter extends ColumnComparator<TransactionTableCol
 
 
 	/* (non-Javadoc)
-	 * @see com.grendelscan.GUI.customControls.dataTable.ColumnComparator#getDefaultColumn()
+	 * @see com.grendelscan.ui.customControls.dataTable.ColumnComparator#getDefaultColumn()
 	 */
 	@Override
 	public TransactionTableColumns getDefaultColumn()

@@ -14,12 +14,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
+import com.grendelscan.commons.ConfigurationManager;
 import com.grendelscan.commons.StringUtils;
 import com.grendelscan.commons.html.EventExecutorTerminator;
 import com.grendelscan.commons.html.EventHandlerExecutor;
 import com.grendelscan.commons.http.transactions.StandardHttpTransaction;
 import com.grendelscan.commons.http.transactions.UnrequestableTransaction;
-import com.grendelscan.scan.ConfigurationManager;
 import com.grendelscan.scan.InterruptedScanException;
 import com.grendelscan.scan.Scan;
 import com.grendelscan.scan.TransactionSource;

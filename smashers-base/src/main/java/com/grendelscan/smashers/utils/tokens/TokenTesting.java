@@ -12,6 +12,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
+import com.grendelscan.commons.ConfigurationManager;
 import com.grendelscan.commons.MimeUtils;
 import com.grendelscan.commons.StringUtils;
 import com.grendelscan.commons.html.HtmlNodeWriter;
@@ -26,7 +27,6 @@ import com.grendelscan.data.database.CommandJob;
 import com.grendelscan.data.database.DataNotFoundException;
 import com.grendelscan.data.database.Database;
 import com.grendelscan.data.database.DatabaseUser;
-import com.grendelscan.scan.ConfigurationManager;
 import com.grendelscan.scan.InterruptedScanException;
 import com.grendelscan.scan.Scan;
 import com.grendelscan.scan.TransactionSource;

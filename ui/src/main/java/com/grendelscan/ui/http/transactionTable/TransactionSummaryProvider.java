@@ -56,7 +56,7 @@ public class TransactionSummaryProvider implements TableDataRepository<Transacti
 	}
 
 //	/* (non-Javadoc)
-//	 * @see com.grendelscan.GUI.customControls.dataTable.DataProvider#getData()
+//	 * @see com.grendelscan.ui.customControls.dataTable.DataProvider#getData()
 //	 */
 //	@Override
 //	public Collection<TransactionSummary> getData()
@@ -65,7 +65,7 @@ public class TransactionSummaryProvider implements TableDataRepository<Transacti
 //	}
 
 	/* (non-Javadoc)
-	 * @see com.grendelscan.GUI.UpdateService.UpdateServiceDataProvider#getLastModified()
+	 * @see com.grendelscan.ui.UpdateService.UpdateServiceDataProvider#getLastModified()
 	 */
 	@Override
 	public long getLastModified()

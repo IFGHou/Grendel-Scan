@@ -17,7 +17,7 @@ package com.grendelscan.commons.logging;
 //import org.apache.log4j.spi.LoggingEvent;
 //
 //import com.grendelscan.GrendelScan;
-//import com.grendelscan.GUI.MainWindow;
+//import com.grendelscan.ui.MainWindow;
 //import com.grendelscan.scan.ConfigurationManager;
 //import com.grendelscan.scan.Scan;
 //

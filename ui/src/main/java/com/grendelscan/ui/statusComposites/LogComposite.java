@@ -92,7 +92,7 @@ public class LogComposite extends com.grendelscan.ui.customControls.basic.GCompo
 
 	/**
 	 * Overriding checkSubclass allows this class to extend
-	 * com.grendelscan.GUI.customControls.basic.GComposite
+	 * com.grendelscan.ui.customControls.basic.GComposite
 	 */
 	@Override
 	protected void checkSubclass()

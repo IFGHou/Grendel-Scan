@@ -12,6 +12,7 @@ import org.apache.http.cookie.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.grendelscan.commons.ConfigurationManager;
 import com.grendelscan.commons.StringUtils;
 import com.grendelscan.commons.collections.CollectionUtils;
 import com.grendelscan.commons.http.HttpUtils;
@@ -20,7 +21,6 @@ import com.grendelscan.commons.http.transactions.StandardHttpTransaction;
 import com.grendelscan.commons.http.transactions.UnrequestableTransaction;
 import com.grendelscan.data.database.collections.DatabaseBackedList;
 import com.grendelscan.data.database.collections.DatabaseBackedMap;
-import com.grendelscan.scan.ConfigurationManager;
 import com.grendelscan.scan.InterruptedScanException;
 import com.grendelscan.scan.Scan;
 import com.grendelscan.scan.TransactionSource;

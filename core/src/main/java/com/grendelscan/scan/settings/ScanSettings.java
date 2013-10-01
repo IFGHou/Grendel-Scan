@@ -25,13 +25,22 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.grendelscan.commons.ConfigurationManager;
 import com.grendelscan.commons.http.URIStringUtils;
-import com.grendelscan.scan.ConfigurationManager;
+import com.grendelscan.proxy.ReverseProxyConfig;
 import com.grendelscan.scan.Scan;
 import com.grendelscan.scan.authentication.AuthenticationPackage;
 import com.grendelscan.scan.authentication.FormBasedAuthentication;
 import com.grendelscan.scan.authentication.HttpAuthenticationType;
 import com.grendelscan.smashers.AbstractSmasher;
+import com.grendelscan.smashers.MasterTestModuleCollection;
+import com.grendelscan.smashers.ModuleDependencyException;
+import com.grendelscan.smashers.settings.ConfigurationOption;
+import com.grendelscan.smashers.settings.IntegerOption;
+import com.grendelscan.smashers.settings.OptionGroup;
+import com.grendelscan.smashers.settings.SelectableOption;
+import com.grendelscan.smashers.settings.TextListOption;
+import com.grendelscan.smashers.settings.TextOption;
 
 /**
  * @author David Byrne

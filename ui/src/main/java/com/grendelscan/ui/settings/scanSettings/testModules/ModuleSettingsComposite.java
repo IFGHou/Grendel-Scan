@@ -22,6 +22,7 @@ import com.grendelscan.smashers.settings.ConfigurationOption;
 import com.grendelscan.smashers.settings.FileNameOption;
 import com.grendelscan.smashers.settings.IntegerOption;
 import com.grendelscan.smashers.settings.MultiSelectOptionGroup;
+import com.grendelscan.smashers.settings.OptionGroup;
 import com.grendelscan.smashers.settings.SelectableOption;
 import com.grendelscan.smashers.settings.SingleSelectOptionGroup;
 import com.grendelscan.smashers.settings.TextListOption;
@@ -120,7 +121,7 @@ public class ModuleSettingsComposite extends com.grendelscan.ui.customControls.b
     }
 
     /**
-     * Overriding checkSubclass allows this class to extend com.grendelscan.GUI.customControls.basic.GComposite
+     * Overriding checkSubclass allows this class to extend com.grendelscan.ui.customControls.basic.GComposite
      */
     @Override
     protected void checkSubclass()

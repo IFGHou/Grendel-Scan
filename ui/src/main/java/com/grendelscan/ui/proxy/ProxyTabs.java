@@ -18,11 +18,11 @@ public class ProxyTabs extends com.grendelscan.ui.customControls.basic.GComposit
     private GTabFolder proxyTabs;
 
     /**
-     * Auto-generated main method to display this com.grendelscan.GUI.customControls.basic.GComposite inside a new GShell.
+     * Auto-generated main method to display this com.grendelscan.ui.customControls.basic.GComposite inside a new GShell.
      */
 
     /**
-     * Auto-generated method to display this com.grendelscan.GUI.customControls.basic.GComposite inside a new GShell.
+     * Auto-generated method to display this com.grendelscan.ui.customControls.basic.GComposite inside a new GShell.
      */
 
     public ProxyTabs(final com.grendelscan.ui.customControls.basic.GComposite parent, final int style)
@@ -32,7 +32,7 @@ public class ProxyTabs extends com.grendelscan.ui.customControls.basic.GComposit
     }
 
     /**
-     * Overriding checkSubclass allows this class to extend com.grendelscan.GUI.customControls.basic.GComposite
+     * Overriding checkSubclass allows this class to extend com.grendelscan.ui.customControls.basic.GComposite
      */
     @Override
     protected void checkSubclass()

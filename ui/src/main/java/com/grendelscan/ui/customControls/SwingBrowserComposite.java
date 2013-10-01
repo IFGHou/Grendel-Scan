@@ -29,7 +29,7 @@ public class SwingBrowserComposite extends com.grendelscan.ui.customControls.bas
 	private JScrollPane scrollPane;
 	/**
 	* Auto-generated main method to display this 
-	* com.grendelscan.GUI.customControls.basic.GComposite inside a new GShell.
+	* com.grendelscan.ui.customControls.basic.GComposite inside a new GShell.
 	*/
 
 	public SwingBrowserComposite(com.grendelscan.ui.customControls.basic.GComposite parent, int style) {

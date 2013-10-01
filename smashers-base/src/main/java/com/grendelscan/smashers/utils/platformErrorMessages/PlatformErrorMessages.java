@@ -18,10 +18,10 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import com.grendelscan.commons.ConfigurationManager;
 import com.grendelscan.commons.html.HtmlNodeUtilities;
 import com.grendelscan.commons.http.transactions.StandardHttpTransaction;
 import com.grendelscan.data.database.collections.DatabaseBackedMap;
-import com.grendelscan.scan.ConfigurationManager;
 import com.grendelscan.smashers.settings.TextOption;
 
 public class PlatformErrorMessages

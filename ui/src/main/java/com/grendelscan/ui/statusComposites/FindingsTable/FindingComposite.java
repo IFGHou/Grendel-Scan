@@ -84,7 +84,7 @@ public class FindingComposite extends com.grendelscan.ui.customControls.basic.GC
     }
 
     /**
-     * Overriding checkSubclass allows this class to extend com.grendelscan.GUI.customControls.basic.GComposite
+     * Overriding checkSubclass allows this class to extend com.grendelscan.ui.customControls.basic.GComposite
      */
     @Override
     protected void checkSubclass()
