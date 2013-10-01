@@ -1,0 +1,15 @@
+package com.grendelscan.GUI2.http.transactionDisplay;
+
+public class UpdateCanceledException extends Exception
+{
+
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 1L;
+
+	public UpdateCanceledException(String string)
+    {
+	    super(string);
+    }
+}

@@ -22,6 +22,7 @@
             <dependency>
                 <groupId>grendel-scan</groupId>
                 <artifactId>cobra</artifactId>
+                    <packaging>pom</packaging>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -249,4 +250,7 @@
         </pluginManagement>
     </build>
 
+    <modules>
+    	<module>JFave</module>
+    </modules>
 </project>
