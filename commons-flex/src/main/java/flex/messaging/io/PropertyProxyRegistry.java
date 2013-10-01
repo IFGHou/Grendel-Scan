@@ -229,7 +229,6 @@ public class PropertyProxyRegistry
         /*
          * Added by David Byrne Just make it quick for a ServerSideObject
          */
-        // FIXME: This creates a circular reference. - Jonathan Byrne 09/19/2013
         if (c == AmfServerSideObject.class)
         {
             proxy = new ServerSideObjectProxy();

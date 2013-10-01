@@ -89,8 +89,7 @@ public class CustomHttpClient extends DefaultHttpClient
         CacheConfiguration ehCacheConfig = new CacheConfiguration("Cobra Cache", 50);
         ehCacheConfig.setOverflowToDisk(true);
         ehCacheConfig.setMaxElementsInMemory(50);
-        // FIXME: This should be passed in or retrieved some way that doesn't create a dependency. - Jonathan Byrne 10/01/2013
-        // ehCacheConfig.setDiskStorePath(Scan.getInstance().getOutputDirectory());
+        ehCacheConfig.setDiskStorePath(Scan.getInstance().getOutputDirectory());
 
         Ehcache ehCache = new Cache(ehCacheConfig);
         ehCache.initialise();

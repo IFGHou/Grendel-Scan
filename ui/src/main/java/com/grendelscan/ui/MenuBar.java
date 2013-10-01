@@ -220,7 +220,7 @@ public class MenuBar
                         public void handleEvent(final Event e)
                         {
                             // FIXME: This will need to be changed to use the new logging. - Jonathan Byrne 10/01/2013
-                            // Log.setLevel(Level.OFF);
+                            Log.setLevel(Level.OFF);
                             selectedLoggingLevel.setSelection(false);
                             selectedLoggingLevel = item;
                             item.setSelection(true);
@@ -237,7 +237,7 @@ public class MenuBar
                         public void handleEvent(final Event e)
                         {
                             // FIXME: This will need to be changed to use the new logging. - Jonathan Byrne 10/01/2013
-                            // Log.setLevel(Level.FATAL);
+                            Log.setLevel(Level.FATAL);
                             selectedLoggingLevel.setSelection(false);
                             selectedLoggingLevel = item;
                             item.setSelection(true);
@@ -255,7 +255,7 @@ public class MenuBar
                         public void handleEvent(final Event e)
                         {
                             // FIXME: This will need to be changed to use the new logging. - Jonathan Byrne 10/01/2013
-                            // Log.setLevel(Level.WARN);
+                            Log.setLevel(Level.WARN);
                             selectedLoggingLevel.setSelection(false);
                             selectedLoggingLevel = item;
                             item.setSelection(true);
@@ -271,7 +271,7 @@ public class MenuBar
                         public void handleEvent(final Event e)
                         {
                             // FIXME: This will need to be changed to use the new logging. - Jonathan Byrne 10/01/2013
-                            // Log.setLevel(Level.INFO);
+                            Log.setLevel(Level.INFO);
                             selectedLoggingLevel.setSelection(false);
                             selectedLoggingLevel = item;
                             item.setSelection(true);
@@ -287,7 +287,7 @@ public class MenuBar
                         public void handleEvent(final Event e)
                         {
                             // FIXME: This will need to be changed to use the new logging. - Jonathan Byrne 10/01/2013
-                            // Log.setLevel(Level.DEBUG);
+                            Log.setLevel(Level.DEBUG);
                             selectedLoggingLevel.setSelection(false);
                             selectedLoggingLevel = item;
                             item.setSelection(true);
@@ -303,7 +303,7 @@ public class MenuBar
                         public void handleEvent(final Event e)
                         {
                             // FIXME: This will need to be changed to use the new logging. - Jonathan Byrne 10/01/2013
-                            // Log.setLevel(Level.TRACE);
+                            Log.setLevel(Level.TRACE);
                             selectedLoggingLevel.setSelection(false);
                             selectedLoggingLevel = item;
                             item.setSelection(true);

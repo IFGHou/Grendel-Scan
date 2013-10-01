@@ -34,7 +34,7 @@ public class HtmlEncodingUtils
 
         htmlCodes.put("lsquo", new Character('`'));
         // FIXME: I get an error about an invalid character in the string below. Some weird unicode encoding problem I suspect. - Jonathan Byrne 10/01/2013
-        // htmlCodes.put("rsquo", new Character('�'));
+        htmlCodes.put("rsquo", new Character('�'));
 
         htmlCodes.put("frasl", new Character((char) 47));
         htmlCodes.put("ndash", new Character((char) 8211));

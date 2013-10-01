@@ -287,21 +287,21 @@ public class DataFormatUtils
     {
         String d = data.toLowerCase();
         // FIXME: The line below is the only dependency to GrendelScan. Is there a way to pass that data in rather than retrieve it from Scan? - Jonathan Byrne 10/01/2013
-        // for (String word : Scan.getInstance().getWordList().getReadOnlyWordsSortedBySize())
-        // {
-        // if (d.length() < 3) // We have no words less than three chars
-        // {
-        // break;
-        // }
-        // if (word.length() > d.length())
-        // {
-        // continue;
-        // }
-        // if (d.contains(word))
-        // {
-        // d = d.replace(word, "");
-        // }
-        // }
+        for (String word : Scan.getInstance().getWordList().getReadOnlyWordsSortedBySize())
+        {
+            if (d.length() < 3) // We have no words less than three chars
+            {
+                break;
+            }
+            if (word.length() > d.length())
+            {
+                continue;
+            }
+            if (d.contains(word))
+            {
+                d = d.replace(word, "");
+            }
+        }
         return d;
     }
 

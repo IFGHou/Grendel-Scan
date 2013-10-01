@@ -6,115 +6,113 @@ import java.util.Map;
 
 public class HttpTransactionMatchCriteriaWeights
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(HttpTransactionMatchCriteriaWeights.class);
-	private int responseCode;
-	private int locationHeader;
-	private int mimeType;
-	private int setCookieName;
-	private int textNodes;
-	private Map<String, Integer> tagCounts;
-	
-	public int getResponseCode()
+    private int responseCode;
+    private int locationHeader;
+    private int mimeType;
+    private int setCookieName;
+    private int textNodes;
+    private final Map<String, Integer> tagCounts;
+
+    public HttpTransactionMatchCriteriaWeights()
     {
-    	return responseCode;
+        tagCounts = Collections.synchronizedMap(new HashMap<String, Integer>(1));
+        initDefaults();
     }
 
-	public void setResponseCode(int responseCode)
+    public int getLocationHeader()
     {
-    	this.responseCode = responseCode;
+        return locationHeader;
     }
 
-	public int getLocationHeader()
+    public int getMimeType()
     {
-    	return locationHeader;
+        return mimeType;
     }
 
-	public void setLocationHeader(int locationHeader)
+    public int getResponseCode()
     {
-    	this.locationHeader = locationHeader;
+        return responseCode;
     }
 
-	public int getMimeType()
+    public int getSetCookieName()
     {
-    	return mimeType;
+        return setCookieName;
     }
 
-	public void setMimeType(int mimeType)
+    public Map<String, Integer> getTagCounts()
     {
-    	this.mimeType = mimeType;
+        return tagCounts;
     }
 
-	public int getSetCookieName()
+    public int getTextNodes()
     {
-    	return setCookieName;
+        return textNodes;
     }
 
-	public void setSetCookieName(int cookieName)
+    private void initDefaults()
     {
-    	this.setCookieName = cookieName;
+        /*
+         * The first group is low because the compare algorithm stops if they don't match.
+         */
+        responseCode = 10;
+        mimeType = 10;
+
+        locationHeader = 100;
+        setCookieName = 100;
+        textNodes = 50;
+
+        tagCounts.put("APPLET", 50);
+        tagCounts.put("OBJECT", 50);
+        tagCounts.put("EMBED", 50);
+        tagCounts.put("TABLE", 30);
+        tagCounts.put("TR", 15);
+        tagCounts.put("SCRIPT", 20);
+        tagCounts.put("A", 10);
+        tagCounts.put("LINK", 10);
+        tagCounts.put("IMG", 10);
     }
 
-	public int getTextNodes()
+    public void setLocationHeader(final int locationHeader)
     {
-    	return textNodes;
+        this.locationHeader = locationHeader;
     }
 
-	public void setTextNodes(int textNodes)
+    public void setMimeType(final int mimeType)
     {
-    	this.textNodes = textNodes;
+        this.mimeType = mimeType;
     }
 
-	public Map<String, Integer> getTagCounts()
+    public void setResponseCode(final int responseCode)
     {
-    	return tagCounts;
+        this.responseCode = responseCode;
     }
 
-	public HttpTransactionMatchCriteriaWeights()
-	{
-		tagCounts = Collections.synchronizedMap(new HashMap<String, Integer>(1));
-		initDefaults();
-	}
-	
-	private void initDefaults()
-	{
-		/*
-		 * The first group is low because the compare algorithm stops if they don't match.
-		 */
-		responseCode = 10; 
-		mimeType = 10;
-		
-		
-		locationHeader = 100;
-		setCookieName = 100;
-		textNodes = 50;
+    public void setSetCookieName(final int cookieName)
+    {
+        setCookieName = cookieName;
+    }
 
-		tagCounts.put("APPLET", 50);
-		tagCounts.put("OBJECT", 50);
-		tagCounts.put("EMBED", 50);
-		tagCounts.put("TABLE", 30);
-		tagCounts.put("TR", 15);
-		tagCounts.put("SCRIPT", 20);
-		tagCounts.put("A", 10);
-		tagCounts.put("LINK", 10);
-		tagCounts.put("IMG", 10);
-	}
-	
-//	public int getMaxScore(AbstractHttpTransaction transactionA, AbstractHttpTransaction transactionB)
-//	{
-//		int score = 0;
-//		score += responseCode;
-//		score += locationHeader;
-//		score += setCookieName;
-//		score += mimeType;
-//		if (transaction.getResponseWrapper().getBody().length > 0 && MimeUtils.isHtmlMimeType(transaction.getResponseWrapper().getHeaders().getMimeType()))
-//		{
-//			score += textNodes;
-//			for (Integer value: tagCounts.values())
-//			{
-//				score += value;
-//			}
-//		}
-//		return score;
-//	}
+    public void setTextNodes(final int textNodes)
+    {
+        this.textNodes = textNodes;
+    }
+
+    // public int getMaxScore(AbstractHttpTransaction transactionA, AbstractHttpTransaction transactionB)
+    // {
+    // int score = 0;
+    // score += responseCode;
+    // score += locationHeader;
+    // score += setCookieName;
+    // score += mimeType;
+    // if (transaction.getResponseWrapper().getBody().length > 0 && MimeUtils.isHtmlMimeType(transaction.getResponseWrapper().getHeaders().getMimeType()))
+    // {
+    // score += textNodes;
+    // for (Integer value: tagCounts.values())
+    // {
+    // score += value;
+    // }
+    // }
+    // return score;
+    // }
 
 }

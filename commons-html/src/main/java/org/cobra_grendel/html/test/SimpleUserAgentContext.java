@@ -7,6 +7,8 @@ import org.cobra_grendel.html.UserAgentContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.grendelscan.commons.http.cobra.CobraHttpRequest;
+
 /**
  * Simple implementation of {@link org.cobra_grendel.html.UserAgentContext}.
  */
@@ -22,7 +24,7 @@ public class SimpleUserAgentContext implements UserAgentContext
     {
         throw new IllegalStateException("This needs to be fixed");
         // FIXME: This creates a circular dependency. - Jonathan Byrne 10/01/2013
-        // return new CobraHttpRequest(referingTransactionId, -1);
+        return new CobraHttpRequest(referingTransactionId, -1);
     }
 
     public void error(final String message)

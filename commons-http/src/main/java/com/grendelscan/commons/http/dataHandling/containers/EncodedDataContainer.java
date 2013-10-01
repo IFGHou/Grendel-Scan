@@ -6,6 +6,7 @@ package com.grendelscan.commons.http.dataHandling.containers;
 import java.io.OutputStream;
 
 import org.apache.commons.lang.NotImplementedException;
+import org.jgroups.util.ExposedByteArrayOutputStream;
 
 import com.grendelscan.commons.StringUtils;
 import com.grendelscan.commons.formatting.DataEncodingStream;
