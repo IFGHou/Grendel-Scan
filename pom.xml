@@ -15,14 +15,28 @@
         <slf4j.version>1.7.2</slf4j.version>
     </properties>
 
+    <modules>
+        <module>cobra</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+    </dependencies>
+
     <dependencyManagement>
-    </dependencyManagement>
         <dependencies>
 
             <dependency>
                 <groupId>grendel-scan</groupId>
                 <artifactId>cobra</artifactId>
-                    <packaging>pom</packaging>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>grendel-scan</groupId>
+                <artifactId>command-line</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -42,16 +56,15 @@
             </dependency>
             <dependency>
                 <groupId>grendel-scan</groupId>
-                <artifactId>ui</artifactId>
+                <artifactId>gui</artifactId>
                 <version>${project.version}</version>
             </dependency>
-<!-- 
+
             <dependency>
                 <groupId>com.eaio.stringsearch</groupId>
                 <artifactId>stringsearch</artifactId>
                 <version>2</version>
             </dependency>
- -->          
             <dependency>
                 <groupId>javax.jms</groupId>
                 <artifactId>jms-api</artifactId>
@@ -184,7 +197,8 @@
                 <artifactId>org.eclipse.jface</artifactId>
                 <version>3.7.0.v20110928-1505</version>
             </dependency>
-  			<dependency>
+
+            <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.version}</version>
@@ -205,26 +219,12 @@
                 <version>1.0.2</version>
             </dependency>
             <dependency>
-                <groupId>org.codehaus.plexus</groupId>
-                <artifactId>plexus-slf4j-logging</artifactId>
-                <version>1.1</version>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.5</version>
             </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>1.0.11</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-core</artifactId>
-                <version>1.0.11</version>
-            </dependency>
-            <dependency>
-			    <groupId>org.slf4j</groupId>
-			    <artifactId>slf4j-log4j12</artifactId>
-			    <version>1.7.5</version>
-			</dependency>
         </dependencies>
+    </dependencyManagement>
 
     <repositories>
         <repository>
@@ -250,7 +250,4 @@
         </pluginManagement>
     </build>
 
-    <modules>
-    	<module>JFave</module>
-    </modules>
 </project>

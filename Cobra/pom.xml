@@ -8,6 +8,7 @@
     </parent>
 
     <artifactId>cobra</artifactId>
+    <name>Grendel-Scan -- Cobra</name>
 
     <dependencies>
 
@@ -26,5 +27,4 @@
 
     </dependencies>
 
-    <packaging>pom</packaging>
 </project>
