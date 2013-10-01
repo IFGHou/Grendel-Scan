@@ -1,0 +1,763 @@
+/*
+ * @(#)SQLParser.jj	1.16 00/02/14
+ * 
+ * Copyright (c) 1999 Sun Microsystems, Inc. All Rights Reserved.
+ * 
+ * This software is the confidential and proprietary information of Sun
+ * Microsystems, Inc. ("Confidential Information").  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Sun.
+ * 
+ * SUN MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF THE
+ * SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE, OR NON-INFRINGEMENT. SUN SHALL NOT BE LIABLE FOR ANY DAMAGES
+ * SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
+ * THIS SOFTWARE OR ITS DERIVATIVES.
+ * 
+ */
+options {
+IGNORE_CASE=true;
+DEBUG_PARSER=false;
+STATIC=false;
+}
+
+
+PARSER_BEGIN(SQLParser)
+
+package flex.messaging.services.messaging.selector;
+
+import java.util.*;
+
+import flex.messaging.messages.Message;
+import flex.messaging.MessageException;
+
+/**
+ * Subset of SQL-92 used by JMS message selectors. 
+ *
+ * <p>
+ * As a starting point I 
+ * used the SQL grammar contributed by 
+ * kevinh@empower.com.au to the JAVACC web site http://www.cobase.cs.ucla.edu/pub/javacc/
+ *
+ * @author Farrukh S. Najmi
+ */
+public class SQLParser {
+
+    Message msg = null;
+    JMSSelector selector;
+    PropertyValueComparator comparator = PropertyValueComparator.getInstance();
+
+    public SQLParser(JMSSelector selector, java.io.InputStream stream) {
+	   this(stream);
+	   this.selector = selector;
+    }
+
+
+    public void setMessage(Message msg) {
+	   this.msg = msg;
+    }
+}
+
+PARSER_END(SQLParser)
+
+/***********************************************************************
+ * Token definitions
+ ***********************************************************************/
+SKIP:
+{
+    " "
+  | "\n"
+  | "\r"
+  | "\t"
+  | "\f"
+}
+
+
+TOKEN:  /* Keywords: Note not all may be in use */
+{
+    < AND: "and" >
+  | < BETWEEN: "between" >
+  | < IN: "in" >
+  | < IS: "is" >
+  | < LIKE: "like" >
+  | < NOT: "not" >
+  | < NULL: "null" >
+  | < OR: "or" >
+  | < ESCAPE: "escape" >
+}     
+ 
+TOKEN:  /* Literals */
+{
+    < INTEGER_LITERAL: (["0"-"9"])+ |
+                       "0" (["x","X"]) (["0"-"9","a"-"e","A"-"E"])+
+    >
+  | < FLOATING_POINT_LITERAL:
+          (["0"-"9"])* "." (["0"-"9"])+ (<EXPONENT>)?
+        | (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)?
+        | (["0"-"9"])+ (<EXPONENT>)?
+    >
+  | < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+  | < STRING_LITERAL: "'" (~["'"])* ( "''" (~["'"])* )* "'" >
+  | < BOOLEAN_LITERAL: ("true" | "false") >
+}
+
+
+TOKEN:  /* Identifiers */
+{
+    < ID: ( <LETTER> | "$" | "_" )+ ( "_" | "$" | "#" | <DIGIT> | <LETTER> )* >
+  | < #LETTER: ["A"-"Z", "a"-"z"] >
+  | < #DIGIT: ["0"-"9"] >
+}
+
+TOKEN:  /* Separators and operators */
+{
+    < LESS: "<" >
+  | < LESSEQUAL: "<=" >
+  | < GREATER: ">" >
+  | < GREATEREQUAL: ">=" >
+  | < EQUAL: "=" >
+  | < NOTEQUAL: "<>" >
+  | < OPENPAREN: "(" >
+  | < CLOSEPAREN: ")" >
+  | < ASTERISK: "*" >
+  | < SLASH: "/" >
+  | < PLUS: "+" >
+  | < MINUS: "-" >
+  | < QUESTIONMARK: "?" >
+}
+
+
+
+/*******************************************************************
+ * The SQL-92 grammar starts here
+ *******************************************************************/
+
+
+
+boolean match(Message msg) :
+{ 
+boolean matchResult = false;
+Object res = null;
+}
+{
+    { 
+      if (msg == null)
+	 throw new MessageException("Null Message for Selector");
+      else
+	 this.msg = msg;
+    }
+
+    res = SQLOrExpr()
+    {
+        if (res != null) {
+            if (! (res instanceof java.lang.Boolean)) {
+                throw new ParseException("Selector must evaluate to a java.lang.Boolean. Instead evaluated to a " + res.getClass().getName());                
+            }
+            
+            matchResult = ((Boolean)res).booleanValue();
+        }
+        return matchResult;
+    }
+}
+
+Object SQLOrExpr() :
+{
+    Object res1=null;
+    Object res2=null;
+}
+{
+    res1 = SQLAndExpr() ( <OR> res2 = SQLAndExpr() 
+        {
+            if ((res1 != null && !(res1 instanceof java.lang.Boolean)) ||
+                (res2 != null && !(res2 instanceof java.lang.Boolean))) {
+                throw new ParseException("SQLOrExpr requires java.lang.Boolean for opearnds of OR operation");
+            }            
+            
+            if (res1 != null && res2 != null) {
+                res1 = Boolean.valueOf(((Boolean)res1).booleanValue() || ((Boolean)res2).booleanValue());
+            } else if (res1 == null && res2 == null) {
+            
+                // U || U = U
+                res1 = null;
+            } else {
+
+               // one of the OR operands are unknown
+               Boolean notUnknownValue = (Boolean)(res1 == null ? res2 : res1);
+               if (notUnknownValue.booleanValue()) {
+
+                   // T || U = T
+                   res1 = notUnknownValue;
+               } else {
+
+                   // F || U = U
+                   res1 = null;
+               }
+            }
+        }
+    )* 
+    { 
+	    return (res1); 
+    }
+}
+
+Object SQLAndExpr() :
+{
+    Object res1=null;
+    Object res2=null;
+}
+{
+    res1 = SQLNotExpr() 
+    ( <AND> res2 = SQLNotExpr() 
+        {
+            if ((res1 != null && !(res1 instanceof java.lang.Boolean)) ||
+                (res2 != null && !(res2 instanceof java.lang.Boolean))) {
+                throw new ParseException("SQLAndExpr requires java.lang.Boolean for operands of AND operation");
+            }
+            
+            if (res1 != null && res2 != null) {
+	        res1 = Boolean.valueOf(((Boolean)res1).booleanValue() && 
+                                   ((Boolean)res2).booleanValue());
+
+            } else if (res1 == null && res2 == null) {
+
+                // U && U = U
+               res1 = null;
+            } else {
+               Boolean notUnknownValue = (Boolean)(res1 == null ? res2 : res1);
+               if (notUnknownValue.booleanValue()) {
+
+                   // T && U = U
+                   res1 = null;
+               } else {
+
+                   // F && U = F
+                   res1 = notUnknownValue;
+               }
+            } 
+	} 
+    )* 
+    { 
+	    return (res1); 
+    }
+}
+
+Object SQLNotExpr() :
+{
+    boolean isNot=false;
+    Object res = null;
+    Object obj = null; 
+}
+{
+    [ LOOKAHEAD(2) <NOT> 
+    { 
+        isNot = true;
+    }
+    ] 
+    res = SQLCompareExpr() 
+    {
+        if (isNot) {
+            if (res == null) {
+
+                // NOT Unknown = Unknown
+                return res;
+            } else if (!(res instanceof java.lang.Boolean)) {
+                throw new ParseException("The NOT operator requires a Boolean to be returned by SQLCompareExpr"); //generateParseException();
+            }
+            
+	    res = Boolean.valueOf(! (((Boolean)res).booleanValue()));
+        }
+        return res;
+    }
+}  
+
+Object SQLCompareExpr()  :
+{
+    Object res = null;
+}
+{
+    (
+      LOOKAHEAD(2) res = SQLIsClause()
+      | res = SQLSumExpr() [ res = SQLCompareExprRight(res) ]
+    )
+    {
+        return res;
+    }
+}       
+
+Boolean SQLCompareExprRight(Object obj1) :
+{ 
+    Boolean res = null;
+    Object obj2 = null;
+}
+{
+    {
+        if (obj1 == null) {
+//            return null; //Comparisons with unknowns yield unknown
+        }
+    }
+    (
+        LOOKAHEAD(2) res = SQLLikeClause(obj1)
+        | LOOKAHEAD(4) res = SQLInClause(obj1)
+        | LOOKAHEAD(2) res = SQLBetweenClause(obj1)
+          
+        | LOOKAHEAD(2) <EQUAL> obj2=SQLSumExpr()
+        { 
+            if (obj1 == null) {
+                return null;
+            }
+            res = Boolean.valueOf((comparator.compare(obj1, obj2) == 0));
+        }
+        | LOOKAHEAD(2) <NOTEQUAL> obj2=SQLSumExpr()
+        { 
+            if (obj1 == null) {
+                return null;
+            }
+            res = Boolean.valueOf((comparator.compare(obj1, obj2) != 0));
+        }
+        | LOOKAHEAD(2) <GREATER> obj2=SQLSumExpr()
+        {
+            if ((obj1 instanceof String) || (obj2 instanceof String) ||
+                (obj1 instanceof Boolean) || (obj2 instanceof Boolean) ) {
+                throw new ParseException("Cannot use > with String or Boolean types");
+            }
+            if (obj1 == null) {
+                return null;
+            }
+            res = Boolean.valueOf((comparator.compare(obj1, obj2) > 0));
+        }
+        | LOOKAHEAD(2) <GREATEREQUAL> obj2=SQLSumExpr()
+        { 
+            if ((obj1 instanceof String) || (obj2 instanceof String) ||
+                (obj1 instanceof Boolean) || (obj2 instanceof Boolean) ) {
+                throw new ParseException("Cannot use >= with String or Boolean types");
+            }
+            if (obj1 == null) {
+                return null;
+            }
+            res = Boolean.valueOf((comparator.compare(obj1, obj2) >= 0));
+        }
+        | LOOKAHEAD(2) <LESS> obj2=SQLSumExpr()
+        { 
+            if ((obj1 instanceof String) || (obj2 instanceof String) ||
+                (obj1 instanceof Boolean) || (obj2 instanceof Boolean) ) {
+                throw new ParseException("Cannot use < with String or Boolean types");
+            }
+            if (obj1 == null) {
+                return null;
+            }
+            //Need to handle the case where comparator may return unknown as a negative value
+            int i = comparator.compare(obj1, obj2);
+            if (i != PropertyValueComparator.UNKNOWN) {
+                res = Boolean.valueOf(i < 0);
+            }
+        }
+        | LOOKAHEAD(2) <LESSEQUAL> obj2=SQLSumExpr()
+        { 
+            if ((obj1 instanceof String) || (obj2 instanceof String) ||
+                (obj1 instanceof Boolean) || (obj2 instanceof Boolean) ) {
+                throw new ParseException("Cannot use <= with String or Boolean types");
+            }
+            if (obj1 == null) {
+                return null;
+            }
+            //Need to handle the case where comparator may return unknown as a negative value
+            int i = comparator.compare(obj1, obj2);
+            if (i != PropertyValueComparator.UNKNOWN) {
+                res = Boolean.valueOf(i <= 0);
+            }
+        }
+    )
+    { 
+        return res; 
+    }
+}
+
+Object SQLSumExpr() :
+{ 
+    Object res1 = null;
+    Object res2 = null;
+    NumericValue num1 = null;
+    NumericValue num2 = null;
+    boolean doAdd = true;
+}
+{
+     ( 
+        res1 = SQLProductExpr()  
+        (
+            (
+                "+" {doAdd = true;}
+                | "-" {doAdd = false;}
+            ) res2 = SQLProductExpr()
+            {
+                num1 = new NumericValue(res1);
+                num2 = new NumericValue(res2);
+                
+                if (doAdd) {
+                    res1 = num1.add(num2);
+                } else {
+                    res1 = num1.subtract(num2);
+                }
+            }                
+        )*  
+     )
+    {   
+        return res1;
+    }                                  
+}
+
+Object SQLProductExpr() :
+{ 
+    Object res1 = null;
+    Object res2 = null;
+    NumericValue num1 = null;
+    NumericValue num2 = null;
+    boolean doMultiply = true;
+}
+{
+     ( 
+        res1 = SQLUnaryExpr()  
+        (
+            (
+                "*" {doMultiply = true;}
+                | "/" {doMultiply = false;}
+            ) res2 = SQLUnaryExpr()
+            {
+                num1 = new NumericValue(res1);
+                num2 = new NumericValue(res2);
+                
+                if (doMultiply) {
+                    res1 = num1.multiply(num2);
+                } else {
+                    res1 = num1.divide(num2);
+                }
+            }                
+        )*      
+     )
+    {   
+        return res1;
+    }                                  
+}
+
+Object SQLUnaryExpr() :
+{ 
+    Object res1 = null;
+    NumericValue num1 = null;
+    boolean negate = false;
+}
+{
+    (
+        [
+            ( 
+                "+" 
+                | "-" {negate = true; }
+            )
+        ] res1 = SQLTerm()
+    )
+    {
+        if (negate) {
+            num1 = new NumericValue(res1);
+            res1 = num1.negate();            
+        }
+        return res1; 
+    }    
+}
+
+
+String SQLColRef() :
+{ Token x; 
+  String colName = new String("");
+}
+{
+    x = <ID> 
+    {
+        colName = x.image;      
+         return colName;
+    }
+}
+
+Object SQLTerm() :
+{
+    String colName;
+    Object res=null;
+}
+{
+    "(" res = SQLOrExpr() ")"
+    {
+        return res;
+    }    
+    | res = SQLLiteral()
+    {
+        return res;
+    }    
+    | colName = SQLColRef() {
+        try {
+        
+	    	res = msg.getHeader(colName);
+            
+              //For Numbers we only deal with Long and Double. Promote as needed
+              if ((res instanceof java.lang.Byte) ||
+                   (res instanceof java.lang.Short) ||
+                   (res instanceof java.lang.Integer)) {
+              
+                  res = new Long(((Number)res).longValue());
+              }
+              else if (res instanceof java.lang.Float) {
+                  res = new Double(((Number)res).doubleValue());
+              }           
+        }
+        catch (Exception e) {
+        	e.printStackTrace();
+        	throw new MessageException(e.getMessage());
+        }
+        return res;
+    }
+}
+
+Object SQLLiteral() :
+{
+    Token x=null;
+    Object obj=null;
+}
+
+{
+  try {
+    
+    ( x = <STRING_LITERAL> 
+      {
+	    obj = selector.processStringLiteral(x.image);        
+      }
+    | x = <INTEGER_LITERAL> { 
+                                obj = new NumericValue(x.image, 
+                                                       NumericValue.LongValue);
+                            }
+    | x = <FLOATING_POINT_LITERAL> {
+                 obj = new NumericValue(x.image, NumericValue.DoubleValue);
+                                   }
+    | x = <BOOLEAN_LITERAL> {obj = Boolean.valueOf(x.image.toLowerCase());}
+    )
+    { return obj; }
+  }
+  catch (Exception e) {
+    //Cant happen
+    throw generateParseException();
+  }
+}
+
+Boolean SQLLikeClause(Object obj1) :
+{
+    Boolean res = null;
+    boolean isLike = false;
+    boolean isNot=false;
+    String colName, propVal=null, pattern;
+    char escapeChar=0;
+}
+{
+    [ <NOT> { isNot = true; }] <LIKE> pattern = SQLPattern() [ <ESCAPE> escapeChar = EscapeChar()  ]
+    {
+        if (pattern != null && ! (pattern instanceof java.lang.String)) {
+            throw new ParseException("The LIKE target must be a string." +
+                           " Found " + pattern.getClass());
+        }
+
+        if (obj1 instanceof java.lang.String) {
+            isLike = selector.matchPattern(pattern, (String)obj1, escapeChar);
+
+            if (isNot) {
+                isLike = !isLike;
+            }
+            res = Boolean.valueOf(isLike);
+      }
+      return res;
+  }
+}
+
+
+String SQLPattern() : 
+{
+    Token x;
+    String res;
+}
+{
+  ( x = <STRING_LITERAL> { res = x.image; }
+  )
+  {
+	return selector.processStringLiteral(res); 
+  }
+}
+
+char EscapeChar() :
+{
+    Token x;
+    String escapeCharStr = null;
+    char escapeChar;
+}
+{
+    ( x = <STRING_LITERAL> { escapeCharStr = x.image; } )
+    {
+        //Must be a single char String
+        if (escapeCharStr.length() != 3) {
+            throw new ParseException("Expected single escape character for SQL pattern. Found " + escapeCharStr);
+        }
+        
+        escapeChar = escapeCharStr.charAt(1);
+        return escapeChar; 
+    }
+
+}
+
+Boolean SQLIsClause() :
+{ 
+    String colName;
+    boolean isNull=false;
+    boolean notNull = false;
+    Boolean res=null;
+}
+{
+  colName = SQLColRef() <IS> 
+  [ <NOT> { notNull = true; } ]
+  <NULL> {
+      try {
+          isNull = (!msg.headerExists(colName));          
+      }
+      catch (Exception e) {
+          throw generateParseException();
+      }
+  }
+  {
+      if (notNull) {
+        isNull = !isNull;
+      }
+      res = Boolean.valueOf(isNull);
+      return res;
+  }
+}
+
+Boolean SQLInClause(Object obj1) :
+{
+    boolean found=false;
+    boolean negate = false;
+    Boolean res=null;
+    ArrayList list = null;
+    Object element = null;
+}
+{
+    [ <NOT> { negate = true; } ] <IN> "("  list = SQLLValueList() ")"
+    {
+        if (list != null) {
+            Iterator iter = list.iterator();
+            try {
+                while (iter.hasNext()) {
+                    element = iter.next();
+                    String str = (String)element;
+                }
+            } catch (ClassCastException cce) {
+                throw new ParseException("All TARGETS of a IN clause "  +
+                     "must be a String. Found a " + element.getClass());
+            }
+
+            if (obj1 == null) {
+                return null;
+            }
+            if (! (obj1 instanceof java.lang.String)) {
+                throw new ParseException("Source of IN clause must be " +
+                           "a String. Found a " + obj1.getClass().getName());
+            }
+            found = list.contains(obj1);
+        }
+                
+        if (negate) {
+            found = !found;
+        }
+        
+        res = Boolean.valueOf(found);
+        return res;
+    }
+}
+
+ArrayList SQLLValueList() :
+{
+    Object elem = null; 
+    ArrayList list = new ArrayList(); 
+}
+{
+    elem = SQLLValueElement() { list.add(elem); } 
+    ( "," elem = SQLLValueElement() { list.add(elem); } )*
+    {
+        return list; 
+    }
+}
+
+Object SQLLValueElement() :
+{ 
+    Object res = null; 
+}
+{
+    (
+        <NULL>
+        | LOOKAHEAD(3) res = SQLSumExpr() 
+        | LOOKAHEAD(3) res = SQLOrExpr()
+    )
+    {
+        if (res instanceof NumericValue) {
+            res = ((NumericValue)res).getValue();
+        }
+        return res; 
+    }
+}
+
+Boolean SQLBetweenClause(Object obj1) :
+{
+    boolean between=false;
+    boolean negate = false;
+    Object res1 = null;
+    Object res2 = null;
+    ArrayList list = null;
+}
+{
+    ( [<NOT> { negate = true; } ] <BETWEEN> res1 = SQLSumExpr() <AND> res2 = SQLSumExpr() )
+    {       
+        if (obj1 instanceof NumericValue) {
+            obj1 = ((NumericValue)obj1).getValue();
+        }
+        if (obj1 != null && !(obj1 instanceof java.lang.Comparable)) {
+            throw new ParseException("The LValue for BETWEEN must be a java.lang.Comparable. Found " + obj1);
+        }
+      
+        if (res1 != null && 
+            (res1 instanceof String || res1 instanceof Boolean)) {
+            throw new ParseException("The START target for BETWEEN must "
+                           + "be a numeric value. Found " + res1.getClass());
+        }
+
+        if (res2 != null && 
+            (res2 instanceof String || res2 instanceof Boolean)) {
+            throw new ParseException("The END target for BETWEEN must "
+                           + "be a numeric value. Found " + res2.getClass());
+        }
+      
+      if (res1 instanceof NumericValue) {
+         res1 = ((NumericValue)res1).getValue();
+      }
+      if (res2 instanceof NumericValue) {
+         res2 = ((NumericValue)res2).getValue();
+      }
+
+      try {
+        if ( (((Comparable)obj1).compareTo(res1) >= 0) && (((Comparable)obj1).compareTo(res2) <= 0) ) {
+              between = true;
+        }     
+      } catch (Throwable t) {
+        // Comparison between incompatible types results in an unknown  value
+        return null;
+      }
+          
+        if (negate) {
+            between = !between;
+        }
+        
+        res1= Boolean.valueOf(between);
+        return (Boolean)res1;
+    }
+}
