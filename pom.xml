@@ -16,7 +16,15 @@
     </properties>
 
     <modules>
-        <module>cobra</module>
+        <module>dom</module>
+        <module>flex</module>
+        <module>commons</module>
+        <module>commons-http</module>
+        <module>commons-proxy</module>
+        <module>core</module>
+        <module>gui</module>
+        <module>included-smashers</module>
+        <module>smashers-base</module>
     </modules>
 
     <dependencies>
@@ -28,15 +36,29 @@
 
     <dependencyManagement>
         <dependencies>
-
             <dependency>
                 <groupId>grendel-scan</groupId>
-                <artifactId>cobra</artifactId>
+                <artifactId>commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>grendel-scan</groupId>
-                <artifactId>command-line</artifactId>
+                <artifactId>commons-html</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>grendel-scan</groupId>
+                <artifactId>commons-http</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>grendel-scan</groupId>
+                <artifactId>commons-flex</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>grendel-scan</groupId>
+                <artifactId>commons-proxy</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -46,17 +68,17 @@
             </dependency>
             <dependency>
                 <groupId>grendel-scan</groupId>
-                <artifactId>dom</artifactId>
+                <artifactId>included-smashers</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>grendel-scan</groupId>
-                <artifactId>flex</artifactId>
+                <artifactId>smashers-base</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>grendel-scan</groupId>
-                <artifactId>gui</artifactId>
+                <artifactId>ui</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -82,6 +104,11 @@
                 <groupId>jgroups</groupId>
                 <artifactId>jgroups</artifactId>
                 <version>2.10.0.Beta2</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>1.3</version>
             </dependency>
             <dependency>
                 <groupId>commons-cli</groupId>
