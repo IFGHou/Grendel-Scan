@@ -8,8 +8,8 @@ import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
-import com.grendelscan.data.findings.Finding;
 import com.grendelscan.scan.Scan;
+import com.grendelscan.scan.data.findings.Finding;
 import com.grendelscan.ui.customControls.basic.GComposite;
 import com.grendelscan.ui.customControls.basic.GTableItem;
 import com.grendelscan.ui.customControls.dataTable.AbstractDataTable;

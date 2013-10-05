@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.grendelscan.commons.http.URIStringUtils;
-import com.grendelscan.proxy.AuthWizardProxy;
 import com.grendelscan.proxy.ProxyConfig;
 import com.grendelscan.scan.Scan;
 import com.grendelscan.ui.GuiUtils;

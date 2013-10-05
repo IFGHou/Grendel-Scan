@@ -20,7 +20,7 @@ import com.grendelscan.queues.QueueThreadGroup;
 import com.grendelscan.queues.QueueThreadState;
 import com.grendelscan.scan.InterruptedScanException;
 import com.grendelscan.scan.Scan;
-import com.grendelscan.smashers.TestJob;
+import com.grendelscan.testing.jobs.TestJob;
 
 /**
  * 

@@ -15,18 +15,18 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TreeItem;
 
 import com.grendelscan.scan.Scan;
-import com.grendelscan.smashers.AbstractSmasher;
-import com.grendelscan.smashers.MasterTestModuleCollection;
-import com.grendelscan.smashers.ModuleDependencyException;
-import com.grendelscan.smashers.settings.ConfigurationOption;
-import com.grendelscan.smashers.settings.FileNameOption;
-import com.grendelscan.smashers.settings.IntegerOption;
-import com.grendelscan.smashers.settings.MultiSelectOptionGroup;
-import com.grendelscan.smashers.settings.OptionGroup;
-import com.grendelscan.smashers.settings.SelectableOption;
-import com.grendelscan.smashers.settings.SingleSelectOptionGroup;
-import com.grendelscan.smashers.settings.TextListOption;
-import com.grendelscan.smashers.settings.TextOption;
+import com.grendelscan.testing.misc.ModuleDependencyException;
+import com.grendelscan.testing.modules.AbstractTestModule;
+import com.grendelscan.testing.modules.MasterTestModuleCollection;
+import com.grendelscan.testing.modules.settings.ConfigurationOption;
+import com.grendelscan.testing.modules.settings.FileNameOption;
+import com.grendelscan.testing.modules.settings.IntegerOption;
+import com.grendelscan.testing.modules.settings.MultiSelectOptionGroup;
+import com.grendelscan.testing.modules.settings.OptionGroup;
+import com.grendelscan.testing.modules.settings.SelectableOption;
+import com.grendelscan.testing.modules.settings.SingleSelectOptionGroup;
+import com.grendelscan.testing.modules.settings.TextListOption;
+import com.grendelscan.testing.modules.settings.TextOption;
 import com.grendelscan.ui.GuiUtils;
 import com.grendelscan.ui.MainWindow;
 import com.grendelscan.ui.customControls.AddRemoveHandler;
@@ -80,9 +80,9 @@ public class ModuleSettingsComposite extends com.grendelscan.ui.customControls.b
         {
             changeCheckChildren(child, checked);
         }
-        if (child2.getData() instanceof AbstractSmasher)
+        if (child2.getData() instanceof AbstractTestModule)
         {
-            AbstractSmasher module = (AbstractSmasher) child2.getData();
+            AbstractTestModule module = (AbstractTestModule) child2.getData();
             if (checked)
             {
                 Scan.getInstance().enableTestModule(module.getClass());
@@ -94,7 +94,7 @@ public class ModuleSettingsComposite extends com.grendelscan.ui.customControls.b
         }
     }
 
-    private void checkModuleTreeBranch(final AbstractSmasher module)
+    private void checkModuleTreeBranch(final AbstractTestModule module)
     {
         GTreeItem currentNode = allTestModulesTreeItem;
         String path = module.getGUIDisplayPath().getText();
@@ -195,7 +195,7 @@ public class ModuleSettingsComposite extends com.grendelscan.ui.customControls.b
                                     {
                                         MainWindow.getInstance().displayMessage("Error", "Cannot disable module yet: " + e.getMessage(), true);
                                     }
-                                    if (!(item.getData() instanceof AbstractSmasher))
+                                    if (!(item.getData() instanceof AbstractTestModule))
                                     {
                                         item.setExpanded(true);
                                     }
@@ -204,9 +204,9 @@ public class ModuleSettingsComposite extends com.grendelscan.ui.customControls.b
                                 // a 0
                                 else if (event.detail == 0)
                                 {
-                                    if (item.getData() instanceof AbstractSmasher)
+                                    if (item.getData() instanceof AbstractTestModule)
                                     {
-                                        AbstractSmasher module = (AbstractSmasher) item.getData();
+                                        AbstractTestModule module = (AbstractTestModule) item.getData();
                                         testModuleDescriptionTextArea.setText(module.getDescription());
                                         populateTestModuleSettings(module);
                                     }
@@ -525,7 +525,7 @@ public class ModuleSettingsComposite extends com.grendelscan.ui.customControls.b
         allTestModulesTreeItem = new GTreeItem(testModuleTree, SWT.NONE);
         allTestModulesTreeItem.setText("All test modules");
         allTestModulesTreeItem.setExpanded(true);
-        for (AbstractSmasher module : MasterTestModuleCollection.getInstance().getAllTestModules())
+        for (AbstractTestModule module : MasterTestModuleCollection.getInstance().getAllTestModules())
         {
             if (!module.hidden())
             {
@@ -535,7 +535,7 @@ public class ModuleSettingsComposite extends com.grendelscan.ui.customControls.b
         allTestModulesTreeItem.setExpanded(true);
     }
 
-    protected void populateTestModuleSettings(final AbstractSmasher module)
+    protected void populateTestModuleSettings(final AbstractTestModule module)
     {
         clearModuleSettingsArea();
 

@@ -5,7 +5,7 @@ package com.grendelscan.ui.statusComposites.FindingsTable;
 
 import org.eclipse.jface.viewers.Viewer;
 
-import com.grendelscan.data.findings.Finding;
+import com.grendelscan.scan.data.findings.Finding;
 import com.grendelscan.ui.customControls.dataTable.ColumnComparator;
 
 /**

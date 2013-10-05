@@ -16,15 +16,21 @@
     </properties>
 
     <modules>
-        <module>dom</module>
-        <module>flex</module>
+        
+        
         <module>commons</module>
         <module>commons-http</module>
         <module>commons-proxy</module>
         <module>core</module>
-        <module>gui</module>
-        <module>included-smashers</module>
+        
+        
+        
+        <module>persistence</module>
+        <module>categorization</module>
+        <module>commons-flex</module>
+        <module>commons-html</module>
         <module>smashers-base</module>
+        <module>ui</module>
     </modules>
 
     <dependencies>

@@ -8,13 +8,13 @@ import java.io.OutputStream;
 import java.util.Iterator;
 
 import com.grendelscan.commons.StringUtils;
-import com.grendelscan.data.findings.Finding;
-import com.grendelscan.data.findings.FindingSeverity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.grendelscan.scan.Scan;
+import com.grendelscan.scan.data.findings.Finding;
+import com.grendelscan.scan.data.findings.FindingSeverity;
 public abstract class ReportGenerator
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportGenerator.class);

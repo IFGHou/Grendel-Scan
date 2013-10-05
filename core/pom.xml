@@ -33,11 +33,6 @@
             <artifactId>httpclient</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.almworks.sqlite4java</groupId>
-            <artifactId>sqlite4java-win32-x64</artifactId>
-            <type>dll</type>
-        </dependency>
-        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
         </dependency>

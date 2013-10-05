@@ -4,8 +4,8 @@ import java.io.File;
 import java.text.DateFormat;
 import java.util.Date;
 
-import com.grendelscan.data.findings.Finding;
-import com.grendelscan.data.findings.FindingSeverity;
+import com.grendelscan.scan.data.findings.Finding;
+import com.grendelscan.scan.data.findings.FindingSeverity;
 
 public class HtmlReportGenerator extends ReportGenerator
 {

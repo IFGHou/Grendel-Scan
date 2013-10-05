@@ -10,7 +10,7 @@ package com.grendelscan.scan.authentication;
 
 import com.grendelscan.commons.http.dataHandling.containers.DataContainerUtils;
 import com.grendelscan.commons.http.transactions.StandardHttpTransaction;
-import com.grendelscan.scan.TransactionSource;
+import com.grendelscan.commons.http.transactions.TransactionSource;
 
 /**
  * 

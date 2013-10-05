@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 
 import com.grendelscan.GrendelScan;
-import com.grendelscan.scan.TransactionSource;
+import com.grendelscan.commons.http.transactions.TransactionSource;
 import com.grendelscan.ui.customControls.basic.GButton;
 import com.grendelscan.ui.customControls.basic.GGroup;
 import com.grendelscan.ui.customControls.basic.GLabel;

@@ -3,7 +3,7 @@ package com.grendelscan.ui.settings.scanSettings.testModules;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 
-import com.grendelscan.smashers.settings.TextOption;
+import com.grendelscan.testing.modules.settings.TextOption;
 import com.grendelscan.ui.customControls.basic.GText;
 
 public class TextModifyListener implements ModifyListener

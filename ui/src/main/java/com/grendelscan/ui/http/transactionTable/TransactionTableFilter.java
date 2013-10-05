@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
-import com.grendelscan.scan.TransactionSource;
+import com.grendelscan.commons.http.transactions.TransactionSource;
 
 /**
  * @author david

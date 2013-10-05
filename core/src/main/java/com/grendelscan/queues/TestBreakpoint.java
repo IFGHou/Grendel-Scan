@@ -3,8 +3,8 @@ package com.grendelscan.queues;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.grendelscan.scan.sessionState.SessionState;
-import com.grendelscan.smashers.TestJob;
+import com.grendelscan.scan.data.sessionState.SessionState;
+import com.grendelscan.testing.jobs.TestJob;
 
 public class TestBreakpoint
 {

@@ -14,7 +14,7 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Display;
 
 import com.grendelscan.GrendelScan;
-import com.grendelscan.data.findings.Finding;
+import com.grendelscan.scan.data.findings.Finding;
 import com.grendelscan.ui.customControls.basic.GLabel;
 import com.grendelscan.ui.customControls.basic.GShell;
 import com.grendelscan.ui.customControls.basic.GText;

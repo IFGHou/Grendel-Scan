@@ -32,15 +32,15 @@ import com.grendelscan.scan.Scan;
 import com.grendelscan.scan.authentication.AuthenticationPackage;
 import com.grendelscan.scan.authentication.FormBasedAuthentication;
 import com.grendelscan.scan.authentication.HttpAuthenticationType;
-import com.grendelscan.smashers.AbstractSmasher;
-import com.grendelscan.smashers.MasterTestModuleCollection;
-import com.grendelscan.smashers.ModuleDependencyException;
-import com.grendelscan.smashers.settings.ConfigurationOption;
-import com.grendelscan.smashers.settings.IntegerOption;
-import com.grendelscan.smashers.settings.OptionGroup;
-import com.grendelscan.smashers.settings.SelectableOption;
-import com.grendelscan.smashers.settings.TextListOption;
-import com.grendelscan.smashers.settings.TextOption;
+import com.grendelscan.testing.misc.ModuleDependencyException;
+import com.grendelscan.testing.modules.AbstractTestModule;
+import com.grendelscan.testing.modules.MasterTestModuleCollection;
+import com.grendelscan.testing.modules.settings.ConfigurationOption;
+import com.grendelscan.testing.modules.settings.IntegerOption;
+import com.grendelscan.testing.modules.settings.OptionGroup;
+import com.grendelscan.testing.modules.settings.SelectableOption;
+import com.grendelscan.testing.modules.settings.TextListOption;
+import com.grendelscan.testing.modules.settings.TextOption;
 
 /**
  * @author David Byrne
@@ -938,10 +938,10 @@ public class ScanSettings implements ScanSettingsContants
             {
                 break;
             }
-            Class<? extends AbstractSmasher> moduleClass;
+            Class<? extends AbstractTestModule> moduleClass;
             try
             {
-                moduleClass = (Class<? extends AbstractSmasher>) Class.forName(moduleClassName);
+                moduleClass = (Class<? extends AbstractTestModule>) Class.forName(moduleClassName);
                 if (config.getBoolean(TEST_MODULES + index + TEST_MODULES__ENABLED))
                 {
                     Scan.getInstance().enableTestModule(moduleClass);
@@ -957,7 +957,7 @@ public class ScanSettings implements ScanSettingsContants
                         LOGGER.error("Problem with configuration of modules due to depenencies: " + e.toString(), e);
                     }
                 }
-                AbstractSmasher module = MasterTestModuleCollection.getInstance().getTestModule(moduleClass);
+                AbstractTestModule module = MasterTestModuleCollection.getInstance().getTestModule(moduleClass);
                 if (module == null)
                 {
                     LOGGER.warn("Config found for module number " + moduleClass + " which doesn't seem to exist.");
@@ -1285,7 +1285,7 @@ public class ScanSettings implements ScanSettingsContants
     private void saveTestModuleSettings(final XMLConfiguration config)
     {
         int index = 0;
-        for (AbstractSmasher module : MasterTestModuleCollection.getInstance().getAllTestModules())
+        for (AbstractTestModule module : MasterTestModuleCollection.getInstance().getAllTestModules())
         {
             config.addProperty(TEST_MODULES + index + TEST_MODULES__MODULE_CLASS, module.getClass().getName());
             config.addProperty(TEST_MODULES + index + TEST_MODULES__MODULE_NAME, module.getName());

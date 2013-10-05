@@ -9,7 +9,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
 
-import com.grendelscan.smashers.settings.FileNameOption;
+import com.grendelscan.testing.modules.settings.FileNameOption;
 import com.grendelscan.ui.customControls.basic.GText;
 
 public class FileNameBrowseButtonListener extends SelectionAdapter

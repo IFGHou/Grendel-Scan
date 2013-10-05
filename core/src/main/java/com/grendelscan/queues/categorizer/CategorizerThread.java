@@ -7,15 +7,15 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.grendelscan.categorizers.interfaces.TransactionCategorizer;
 import com.grendelscan.commons.http.transactions.StandardHttpTransaction;
 import com.grendelscan.queues.AbstractScanQueue;
 import com.grendelscan.queues.AbstractTransactionBasedQueueThread;
 import com.grendelscan.queues.QueueThreadGroup;
 import com.grendelscan.scan.InterruptedScanException;
 import com.grendelscan.scan.Scan;
-import com.grendelscan.smashers.AbstractSmasher;
-import com.grendelscan.smashers.TestJob;
-import com.grendelscan.smashers.TransactionCategorizer;
+import com.grendelscan.testing.jobs.TestJob;
+import com.grendelscan.testing.modules.AbstractTestModule;
 
 public class CategorizerThread extends AbstractTransactionBasedQueueThread
 {
@@ -32,9 +32,9 @@ public class CategorizerThread extends AbstractTransactionBasedQueueThread
         return Scan.getInstance().getCategorizerQueue();
     }
 
-    private void joinJobLists(final Map<AbstractSmasher, Set<TestJob>> target, final Map<AbstractSmasher, Set<TestJob>> source)
+    private void joinJobLists(final Map<AbstractTestModule, Set<TestJob>> target, final Map<AbstractTestModule, Set<TestJob>> source)
     {
-        for (AbstractSmasher module : source.keySet())
+        for (AbstractTestModule module : source.keySet())
         {
             if (target.containsKey(module))
             {
@@ -54,14 +54,14 @@ public class CategorizerThread extends AbstractTransactionBasedQueueThread
     @Override
     protected void processNextTransaction(final StandardHttpTransaction transaction) throws InterruptedScanException
     {
-        Map<AbstractSmasher, Set<TestJob>> jobs = new HashMap<AbstractSmasher, Set<TestJob>>();
+        Map<AbstractTestModule, Set<TestJob>> jobs = new HashMap<AbstractTestModule, Set<TestJob>>();
         if (transaction.getRequestOptions().tokenSubmission)
         {
             /*
              * Token submissions should only be reviewed for token output, and not used for other types of testing
              */
             handlePause_isRunning();
-            Map<AbstractSmasher, Set<TestJob>> tempJobs = Scan.getInstance().getCategorizers().getByOutputContextCategorizer().analyzeTransaction(transaction);
+            Map<AbstractTestModule, Set<TestJob>> tempJobs = Scan.getInstance().getCategorizers().getByOutputContextCategorizer().analyzeTransaction(transaction);
             joinJobLists(jobs, tempJobs);
         }
         else
@@ -69,7 +69,7 @@ public class CategorizerThread extends AbstractTransactionBasedQueueThread
             for (TransactionCategorizer categorizer : Scan.getInstance().getCategorizers().getTransactionCategorizers())
             {
                 handlePause_isRunning();
-                Map<AbstractSmasher, Set<TestJob>> tempJobs = categorizer.analyzeTransaction(transaction);
+                Map<AbstractTestModule, Set<TestJob>> tempJobs = categorizer.analyzeTransaction(transaction);
                 joinJobLists(jobs, tempJobs);
             }
         }

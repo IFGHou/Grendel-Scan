@@ -11,9 +11,9 @@ import com.grendelscan.commons.http.HttpFormatException;
 import com.grendelscan.commons.http.HttpUtils;
 import com.grendelscan.commons.http.RequestOptions;
 import com.grendelscan.commons.http.transactions.StandardHttpTransaction;
+import com.grendelscan.commons.http.transactions.TransactionSource;
 import com.grendelscan.commons.http.transactions.UnrequestableTransaction;
 import com.grendelscan.scan.InterruptedScanException;
-import com.grendelscan.scan.TransactionSource;
 
 public class Fuzzer
 {

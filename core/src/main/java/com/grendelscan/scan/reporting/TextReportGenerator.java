@@ -2,8 +2,8 @@ package com.grendelscan.scan.reporting;
 
 import java.io.File;
 
-import com.grendelscan.data.findings.Finding;
-import com.grendelscan.data.findings.FindingSeverity;
+import com.grendelscan.scan.data.findings.Finding;
+import com.grendelscan.scan.data.findings.FindingSeverity;
 
 public class TextReportGenerator extends ReportGenerator
 {
