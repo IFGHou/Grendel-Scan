@@ -56,6 +56,12 @@ import com.grendelscan.scan.settings.ScanSettings;
 import com.grendelscan.testing.misc.ModuleDependencyException;
 import com.grendelscan.testing.modules.AbstractTestModule;
 import com.grendelscan.testing.modules.MasterTestModuleCollection;
+import com.grendelscan.testing.utils.nikto.Nikto;
+import com.grendelscan.testing.utils.platformErrorMessages.PlatformErrorMessages;
+import com.grendelscan.testing.utils.sessionIDs.SessionID;
+import com.grendelscan.testing.utils.spidering.SpiderConfig;
+import com.grendelscan.testing.utils.spidering.SpiderUtils;
+import com.grendelscan.testing.utils.tokens.TokenTesting;
 
 /**
  * 
@@ -254,8 +260,8 @@ public class Scan {
 		s += "DOM parsing time: " + domTime + "\n\n";
 
 		s += "Processing times:\n";
-		for (Class<? extends AbstractTestModule> moduleId : testerQueue.getTimes()
-				.keySet()) {
+		for (Class<? extends AbstractTestModule> moduleId : testerQueue
+				.getTimes().keySet()) {
 			s += "\t"
 					+ MasterTestModuleCollection.getInstance()
 							.getTestModule(moduleId).getName() + " ("
@@ -286,8 +292,8 @@ public class Scan {
 				+ "\n";
 
 		s += "\nTester queue stats:\n";
-		for (AbstractTestModule module : MasterTestModuleCollection.getInstance()
-				.getAllTestModules()) {
+		for (AbstractTestModule module : MasterTestModuleCollection
+				.getInstance().getAllTestModules()) {
 			s += "\t\t" + module.getName() + " (" + module.getClass().getName()
 					+ "): " + testerQueue.getPendingCount(module.getClass())
 					+ "\n";

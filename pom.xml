@@ -26,10 +26,10 @@
         
         
         <module>persistence</module>
-        <module>categorization</module>
+        
         <module>commons-flex</module>
         <module>commons-html</module>
-        <module>smashers-base</module>
+        
         <module>ui</module>
     </modules>
 
